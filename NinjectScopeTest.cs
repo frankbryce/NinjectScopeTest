@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Linq;
+using log4net;
 using Moq;
 using Ninject;
+using NinjectScopeTest.Exception;
 
 namespace NinjectScopeTest
 {
-    public abstract class NinjectScopeTest<T>
-        where T : NinjectScope, new()
+    public abstract class NinjectScopeTest<T> where T : NinjectScope, new()
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof (NinjectScopeTest<T>));
         private T _scope;
 
         protected T Scope
@@ -23,6 +25,11 @@ namespace NinjectScopeTest
             }
         }
 
+        protected U Get<U>()
+        {
+            return Scope.Kernel.Get<U>();
+        }
+
         private void Initialize()
         {
             _scope.Kernel = new StandardKernel();
@@ -33,14 +40,32 @@ namespace NinjectScopeTest
                     prop.PropertyType.GetGenericTypeDefinition() ==
                     typeof (Mock<>))
                 {
-                    var mockObj =
-                        (Mock) Activator.CreateInstance(prop.PropertyType);
-                    prop.SetValue(_scope, mockObj);
+                    Mock mock;
+                    try
+                    {
+                        mock = (Mock) Activator.CreateInstance(prop.PropertyType);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Logger.ErrorFormat(
+                            "There was a problem creating a Mock of type {0}",
+                            prop.PropertyType);
+                        throw new InvalidMockException(ex);
+                    }
+
+                    prop.SetValue(_scope, mock);
                     _scope.Kernel.Bind(
                         prop.PropertyType
                             .GenericTypeArguments
                             .First()
-                        ).ToConstant(mockObj.Object);
+                        ).ToConstant(mock.Object);
+                }
+                else if (prop.PropertyType ==
+                         typeof (Mock))
+                {
+                    var mock = new Mock<object>();
+                    prop.SetValue(_scope, mock);
+                    _scope.Kernel.Bind(typeof (object)).ToConstant(mock.Object);
                 }
             }
 
