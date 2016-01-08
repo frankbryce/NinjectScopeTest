@@ -80,11 +80,11 @@ namespace NinjectScopeTest.Test
 }
 ```
 
-## NoBind Attribute
+## DoNotBind Attribute
 
 If you would not like to bind one of your mocked properties on your
 Scope object to the Ninject Kernel, then you may specify this intention
-with the [NoBind] Attribute.  This can be useful if you are creating a
+with the [DoNotBind] Attribute.  This can be useful if you are creating a
 mock solely for returning from another mocked call, or if you have
 two mocked properties of the same type, and only one of them should
 be used to resolve your UUT dependencies.
@@ -164,14 +164,14 @@ namespace NinjectScopeTest.Test
     }
 }
 ```
-## NoInstantiate Attribute
+## DoNotInstantiate Attribute
 
 There is also an analagous attribute for you properties which you'd like to have
 as type Mock<T>, but would not like NinjectScopeTest to instantiate it for you.
 
-As a side note, *if you specify [NoInstantiate, DoBind] on an object, Ninject*
+As a side note, *if you specify [DoNotInstantiate, DoBind] on an object, Ninject*
 *will bind a null value to your mock of that type.*  If you would like to avoid
-this behavior, then explicitely specify [NoInstantiate, NoBind] to your Mock<T>
+this behavior, then explicitely specify [DoNotInstantiate, DoNotBind] to your Mock<T>
 property.
 
 ## Feedback
