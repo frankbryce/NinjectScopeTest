@@ -18,7 +18,7 @@ namespace NinjectScopeTest.Test
             }
         }
 
-        [TestMethod, ExpectedException(typeof (InvalidMockException))]
+        [TestMethod, ExpectedException(typeof (InternalException))]
         public void NinjectScopeTest_ShouldThrowInvalidMockException()
         {
             // scope is lazy loaded, so need to do something with it for hte exception
@@ -27,7 +27,8 @@ namespace NinjectScopeTest.Test
         }
 
         [TestMethod]
-        public void NinjectScopeTest_ShouldNotThrowExceptionIfWeDoNotAccessScope()
+        public void NinjectScopeTest_ShouldNotThrowExceptionIfWeDoNotAccessScope
+            ()
         {
             Assert.IsTrue(true);
         }

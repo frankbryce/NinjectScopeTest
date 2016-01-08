@@ -38,8 +38,15 @@ namespace NinjectScopeTest
             {
                 if (_scope == null)
                 {
-                    _scope = new T();
-                    Initialize();
+                    try
+                    {
+                        _scope = new T();
+                        Initialize();
+                    }
+                    catch(System.Exception ex)
+                    {
+                        throw new InternalException(ex);
+                    }
                 }
                 return _scope;
             }
@@ -54,6 +61,10 @@ namespace NinjectScopeTest
             catch (ActivationException ex)
             {
                 throw new GetInstanceException(ex);
+            }
+            catch (System.Exception ex)
+            {
+                throw new InternalException(ex);
             }
         }
 
@@ -76,7 +87,8 @@ namespace NinjectScopeTest
                     try
                     {
                         mock =
-                            (Mock) Activator.CreateInstance(prop.PropertyType);
+                            (Mock)
+                                Activator.CreateInstance(prop.PropertyType);
                     }
                     catch (System.Exception ex)
                     {
@@ -106,7 +118,8 @@ namespace NinjectScopeTest
                         x => x.AttributeType !=
                              typeof (DoNotInstantiateAttribute));
                 var doBind = prop.CustomAttributes
-                    .All(x => x.AttributeType != typeof (DoNotBindAttribute));
+                    .All(
+                        x => x.AttributeType != typeof (DoNotBindAttribute));
 
                 var mockObject = mock.Object;
 

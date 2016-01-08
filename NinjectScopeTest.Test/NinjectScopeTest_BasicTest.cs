@@ -9,6 +9,9 @@ namespace NinjectScopeTest.Test
     {
         public class TestScope : NinjectScope
         {
+            /// <summary>
+            /// Auto-mocked by
+            /// </summary>
             public Mock<ICloneable> CloneableMock { get; set; }
             public Mock<ICloneable> CloneableClonedMock { get; set; }
             public Mock ObjectMock { get; set; }
