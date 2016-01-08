@@ -3,13 +3,16 @@ using System.Linq;
 using log4net;
 using Moq;
 using Ninject;
+using NinjectScopeTest.Attribute;
 using NinjectScopeTest.Exception;
 
 namespace NinjectScopeTest
 {
     public abstract class NinjectScopeTest<T> where T : NinjectScope, new()
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof (NinjectScopeTest<T>));
+        private static readonly ILog Logger =
+            LogManager.GetLogger(typeof (NinjectScopeTest<T>));
+
         private T _scope;
 
         protected T Scope
@@ -27,23 +30,36 @@ namespace NinjectScopeTest
 
         protected U Get<U>()
         {
-            return Scope.Kernel.Get<U>();
+            try
+            {
+                return Scope.Kernel.Get<U>();
+            }
+            catch (ActivationException ex)
+            {
+                throw new GetInstanceException(ex);
+            }
         }
 
         private void Initialize()
         {
-            _scope.Kernel = new StandardKernel();
+            _scope.Kernel = new StandardKernel(
+                new NinjectSettings
+                {
+                    AllowNullInjection = true
+                });
 
             foreach (var prop in typeof (T).GetProperties())
             {
+                Mock mock;
+                Type bindType;
                 if (prop.PropertyType.IsGenericType &&
                     prop.PropertyType.GetGenericTypeDefinition() ==
                     typeof (Mock<>))
                 {
-                    Mock mock;
                     try
                     {
-                        mock = (Mock) Activator.CreateInstance(prop.PropertyType);
+                        mock =
+                            (Mock) Activator.CreateInstance(prop.PropertyType);
                     }
                     catch (System.Exception ex)
                     {
@@ -53,19 +69,42 @@ namespace NinjectScopeTest
                         throw new InvalidMockException(ex);
                     }
 
-                    prop.SetValue(_scope, mock);
-                    _scope.Kernel.Bind(
-                        prop.PropertyType
-                            .GenericTypeArguments
-                            .First()
-                        ).ToConstant(mock.Object);
+                    bindType = prop.PropertyType
+                        .GenericTypeArguments
+                        .First();
                 }
                 else if (prop.PropertyType ==
                          typeof (Mock))
                 {
-                    var mock = new Mock<object>();
+                    mock = new Mock<object>();
+                    bindType = typeof (object);
+                }
+                else
+                {
+                    continue;
+                }
+
+                var doInstantiate = prop.CustomAttributes
+                    .All(
+                        x => x.AttributeType !=
+                             typeof (DoNotInstantiateAttribute));
+                var doBind = prop.CustomAttributes
+                    .All(x => x.AttributeType != typeof (DoNotBindAttribute));
+
+                var mockObject = mock.Object;
+
+                if (doInstantiate)
+                {
                     prop.SetValue(_scope, mock);
-                    _scope.Kernel.Bind(typeof (object)).ToConstant(mock.Object);
+                }
+                else if (doBind)
+                {
+                    mockObject = null;
+                }
+
+                if (doBind)
+                {
+                    _scope.Kernel.Bind(bindType).ToConstant(mockObject);
                 }
             }
 
