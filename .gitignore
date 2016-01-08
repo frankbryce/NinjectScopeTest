@@ -6,4 +6,5 @@
 _ReSharper.*
 *.csproj.user
 SatellitePackageSample/packages/*
+TestResults/
 *.nupkg

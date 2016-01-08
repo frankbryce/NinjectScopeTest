@@ -8,6 +8,23 @@ using NinjectScopeTest.Exception;
 
 namespace NinjectScopeTest
 {
+    /// <summary>
+    ///     This is the base class which can be derived from in your unit testing
+    ///     class in order to gain the benefits of an auto-mocking behavior
+    ///     for your Ninject dependencies.  Any properties of type Mock<T>
+    ///     for any interface or non-sealed class T will be automatically
+    ///     Instantiated and bound to the Kernel object on Scope.  Use the
+    ///     attributes [NoBind] and [NoInstantiate] if you wish to override
+    ///     that default behavior on any properties of type Mock<T> on your
+    ///     Scope object.  Any other properties, methods, or fields will be
+    ///     ignored by the NinjectScopeTest base class to use for any other
+    ///     scope properties or functionality that you may want.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of the derived Scope object that is used
+    ///     as the scope for your unit test class.  NinjectScopeTest needs this
+    ///     type in order to instantiate the scope when the tests load.
+    /// </typeparam>
     public abstract class NinjectScopeTest<T> where T : NinjectScope, new()
     {
         private static readonly ILog Logger =

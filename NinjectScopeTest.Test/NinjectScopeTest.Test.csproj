@@ -67,7 +67,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NinjectScopeTest.csproj">
+    <ProjectReference Include="..\NinjectScopeTest\NinjectScopeTest.csproj">
       <Project>{4E6EEA43-F798-4E27-9075-F95DD1F46431}</Project>
       <Name>NinjectScopeTest</Name>
     </ProjectReference>
