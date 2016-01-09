@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>NinjectScopeTest.dll</id>
+    <version>0.1.0</version>
+    <title>NinjectScopeTest</title>
+    <authors>John Carpenter</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+        A package for making auto-mocking easier and intuitive with Ninject and Moq
+    </description>
+    <releaseNotes>Initial Release</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>Ninject Moq auto-mock mock</tags>
+  </metadata>
+</package>
