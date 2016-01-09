@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>NinjectScopeTest.dll</id>
+    <id>NinjectScopeTest</id>
     <version>0.1.0</version>
-    <title>NinjectScopeTest</title>
+    <title>Moq Automatic Initialization and Ninject Automatic Binding for Test Scopes</title>
     <authors>John Carpenter</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
