@@ -2,15 +2,15 @@
 <package>
   <metadata>
     <id>NinjectScopeTest</id>
-    <version>0.2.0</version>
-    <title>Moq Automatic Initialization and Ninject Automatic Binding for Test Scopes</title>
+    <version>0.2.1</version>
+    <title>Moq Auto-Initialization and Ninject Auto-Binding for Test Scopes</title>
     <authors>John Carpenter</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
         A package for making auto-mocking easier and intuitive with Ninject and Moq
     </description>
-    <releaseNotes>Initial Release</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <releaseNotes>Fixing a dependency issue with log4net</releaseNotes>
+    <copyright>Copyright 2016-</copyright>
     <tags>Ninject Moq auto-mock mock</tags>
   </metadata>
 </package>
