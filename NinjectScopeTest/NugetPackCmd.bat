@@ -1,0 +1,1 @@
+../.nuget/nuget.exe pack NinjectScopeTest.csproj -Prop Configuration=Release
