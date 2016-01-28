@@ -12,7 +12,19 @@ namespace NinjectScopeTest
     /// </summary>
     public abstract class NinjectScope
     {
-        public IKernel Kernel { get; set; }
+        public StandardKernel Kernel { get; set; }
+
+        /// <summary>
+        /// Provide the ability of the derived scope to override the default
+        /// settings that are used for the StandardKernel.  Simply override
+        /// this property in your test scope and provide the settings that
+        /// you would like to use.  The default settings is
+        /// 
+        /// new NinjectSettings {
+        ///     AllowNullInjection = true
+        /// };
+        /// </summary>
+        public virtual INinjectSettings Settings => new NinjectSettings { AllowNullInjection = true };
 
         public abstract void Initialize();
     }

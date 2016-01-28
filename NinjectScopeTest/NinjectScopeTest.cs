@@ -70,11 +70,7 @@ namespace NinjectScopeTest
 
         private void Initialize()
         {
-            _scope.Kernel = new StandardKernel(
-                new NinjectSettings
-                {
-                    AllowNullInjection = true
-                });
+            _scope.Kernel = new StandardKernel(_scope.Settings);
 
             foreach (var prop in typeof (T).GetProperties())
             {

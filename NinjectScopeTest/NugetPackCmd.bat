@@ -1,1 +1,1 @@
-../.nuget/nuget.exe pack NinjectScopeTest.csproj -Prop Configuration=Release
+cmd /c ..\.nuget\nuget.exe pack NinjectScopeTest.csproj -Prop Configuration=Release
