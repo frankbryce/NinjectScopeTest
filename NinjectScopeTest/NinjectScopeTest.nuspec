@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>NinjectScopeTest</id>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
     <title>Moq Auto-Initialization and Ninject Auto-Binding for Test Scopes</title>
     <authors>John Carpenter</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -10,8 +10,7 @@
         A package for making auto-mocking easier and intuitive with Ninject and Moq
     </description>
     <releaseNotes>
-      Fixing dependency issue where specific version of log4net and Moq are expected by
-      the application that uses NinjectScopeTest.
+      Fixing Requiring a specific version of the .Net framework
     </releaseNotes>
     <copyright>Copyright 2016-</copyright>
     <tags>Ninject Moq auto-mock mock</tags>
