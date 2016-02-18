@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>NinjectScopeTest</id>
-    <version>0.4.0</version>
+    <version>0.5.0</version>
     <title>Moq Auto-Initialization and Ninject Auto-Binding for Test Scopes</title>
     <authors>John Carpenter</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -10,13 +10,15 @@
         A package for making auto-mocking easier and intuitive with Ninject and Moq
     </description>
     <releaseNotes>
-      Making Dependency versions not strict, to fix versioning issues when packages are updated.
-      Many features were added to make tests as small as possible.
-      Added an auto-mocking feature so that interfaces are mocked automatically without
-      specifying them as a property on NinjectTestScope.  Also made Initialize() virtual rather
-      than abstract so that a default empty initialize method is not required.
+      Fixing dependency issue where specific version of log4net and Moq are expected by
+      the application that uses NinjectScopeTest.
     </releaseNotes>
     <copyright>Copyright 2016-</copyright>
     <tags>Ninject Moq auto-mock mock</tags>
+    <dependencies>
+      <dependency id="log4net" version="[2.0.0,)" />
+      <dependency id="Moq" version="[4.2.1312.1319,)" />
+      <dependency id="Ninject" version="[3.2.0.0,)" />
+    </dependencies>
   </metadata>
 </package>
