@@ -11,6 +11,11 @@
         {
         }
 
+        protected NinjectScopeExceptionBase(string message, System.Exception innerException)
+            : base(message, innerException)
+        {
+        }
+
         protected NinjectScopeExceptionBase(System.Exception innerException)
             : base(innerException.Message, innerException)
         {

@@ -61,9 +61,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="NinjectAutoScopeTest_AutoResolves.cs" />
     <Compile Include="NinjectScopeTest_BadBindUutTest.cs" />
     <Compile Include="NinjectScopeTest_BasicNinjectSettingsTest.cs" />
     <Compile Include="NinjectScopeTest_BasicUutTest.cs" />
+    <Compile Include="NinjectScopeTestDefaultScope.cs" />
+    <Compile Include="NinjectScopeTest_GetWithoutAccessingScope.cs" />
     <Compile Include="NinjectScopeTest_NoBindUutTest.cs" />
     <Compile Include="NinjectScopeTest_BindInstantiateTest.cs" />
     <Compile Include="NinjectScopeTest_NoInstantiateTest.cs" />

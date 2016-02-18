@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
@@ -63,6 +64,7 @@
     <Compile Include="Exception\InternalException.cs" />
     <Compile Include="Exception\InvalidMockException.cs" />
     <Compile Include="Exception\NinjectScopeExceptionBase.cs" />
+    <Compile Include="NinjectAutoScopeTest.cs" />
     <Compile Include="NinjectScope.cs" />
     <Compile Include="NinjectScopeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

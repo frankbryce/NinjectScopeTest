@@ -12,6 +12,10 @@
     /// </summary>
     public class GetInstanceException : NinjectScopeExceptionBase
     {
+        public GetInstanceException(string message, System.Exception e) : base(message, e)
+        {
+        }
+
         public GetInstanceException(string message) : base(message)
         {
         }

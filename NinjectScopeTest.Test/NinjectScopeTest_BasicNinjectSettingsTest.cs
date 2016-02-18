@@ -19,19 +19,15 @@ namespace NinjectScopeTest.Test
             [DoNotInstantiate]
             public Mock<ICloneable> WillNotBeBound { get; set; }
 
-            public override INinjectSettings Settings {
-                get {
-                    return new NinjectSettings
-                    {
-                        // make this false so that not instantiating the object will
-                        // throw an exception if we try to get the mocked object from Ninject
-                        AllowNullInjection = false,
-                        // singleton override behavior so all registered objects end
-                        // up being singleton
-                        DefaultScopeCallback = StandardScopeCallbacks.Singleton
-                    };
-                }
-            }
+            public override INinjectSettings Settings => new NinjectSettings
+            {
+                // make this false so that not instantiating the object will
+                // throw an exception if we try to get the mocked object from Ninject
+                AllowNullInjection = false,
+                // singleton override behavior so all registered objects end
+                // up being singleton
+                DefaultScopeCallback = StandardScopeCallbacks.Singleton
+            };
 
             public class TestComparable : IComparable
             {

@@ -9,6 +9,14 @@ using NinjectScopeTest.Exception;
 namespace NinjectScopeTest
 {
     /// <summary>
+    /// Default NinjectScopeTest uses the default NinjectScope for minimal setup for 
+    /// the simplest tests.
+    /// </summary>
+    public abstract class NinjectScopeTest : NinjectScopeTest<NinjectScope>
+    {
+    }
+
+    /// <summary>
     ///     This is the base class which can be derived from in your unit testing
     ///     class in order to gain the benefits of an auto-mocking behavior
     ///     for your Ninject dependencies.  Any properties of type Mock<T>
@@ -27,9 +35,8 @@ namespace NinjectScopeTest
     /// </typeparam>
     public abstract class NinjectScopeTest<T> where T : NinjectScope, new()
     {
-        private static readonly ILog Logger =
+        protected static readonly ILog Logger =
             LogManager.GetLogger(typeof (NinjectScopeTest<T>));
-
         private T _scope;
 
         protected T Scope
@@ -52,11 +59,11 @@ namespace NinjectScopeTest
             }
         }
 
-        protected U Get<U>()
+        protected virtual object Get(Type type)
         {
             try
             {
-                return Scope.Kernel.Get<U>();
+                return Scope.Kernel.Get(type);
             }
             catch (ActivationException ex)
             {
@@ -66,6 +73,11 @@ namespace NinjectScopeTest
             {
                 throw new InternalException(ex);
             }
+        }
+
+        protected virtual U Get<U>()
+        {
+            return (U) Get(typeof(U));
         }
 
         private void Initialize()

@@ -10,7 +10,7 @@ namespace NinjectScopeTest
     ///     the Scope object, then there is no overhead in having it a part of
     ///     your derived class.
     /// </summary>
-    public abstract class NinjectScope
+    public class NinjectScope
     {
         public StandardKernel Kernel { get; set; }
 
@@ -24,8 +24,16 @@ namespace NinjectScopeTest
         ///     AllowNullInjection = true
         /// };
         /// </summary>
-        public virtual INinjectSettings Settings => new NinjectSettings { AllowNullInjection = true };
+        public virtual INinjectSettings Settings => new NinjectSettings {AllowNullInjection = true};
 
-        public abstract void Initialize();
+        /// <summary>
+        /// Overridable Initialize() method that is called the first time that
+        /// the instance of this object is accessed.  It's like a TestInitialize()
+        /// call but test framework agnostic, and lazy loaded so that not all tests
+        /// need to execute this method if the test doesn't require the Test Scope.
+        /// </summary>
+        public virtual void Initialize()
+        {
+        }
     }
 }
