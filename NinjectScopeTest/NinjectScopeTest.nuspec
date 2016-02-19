@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>NinjectScopeTest</id>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
     <title>Moq Auto-Initialization and Ninject Auto-Binding for Test Scopes</title>
     <authors>John Carpenter</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
