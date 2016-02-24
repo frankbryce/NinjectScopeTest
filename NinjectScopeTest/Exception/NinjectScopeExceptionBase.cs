@@ -1,8 +1,8 @@
-﻿namespace NinjectScopeTest.Exception
+﻿namespace Scoper.Exception
 {
     /// <summary>
     ///     The base object from which all Exceptions within the
-    ///     NinjectScopeTest package derive.  This can be used to
+    ///     Scoper.Ninject.AutoScopeTest package derive.  This can be used to
     ///     catch any exception which may be thrown by this package.
     /// </summary>
     public abstract class NinjectScopeExceptionBase : System.Exception

@@ -1,15 +1,15 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NinjectScopeTest.Exception;
+using Scoper.Exception;
 
-namespace NinjectScopeTest.Test
+namespace Scoper.Test.Ninject
 {
     [TestClass]
-    public class NinjectScopeTest_BadBindUutTest :
-        NinjectScopeTest<NinjectScopeTest_BadBindUutTest.TestScope>
+    public class BadBindUutTest :
+        Scoper.Ninject.AutoScopeTest<BadBindUutTest.TestScope>
     {
-        public class TestScope : NinjectScope
+        public class TestScope : Scoper.Ninject.Scope
         {
             public Mock<ICloneable> CloneableMock { get; set; }
             public Mock<ICloneable> CloneableMock2 { get; set; }

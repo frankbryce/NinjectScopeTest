@@ -1,15 +1,15 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NinjectScopeTest.Attribute;
+using Scoper.Attribute;
 
-namespace NinjectScopeTest.Test
+namespace Scoper.Test.Ninject
 {
     [TestClass]
-    public class NinjectScopeTest_NoBindUutTest :
-        NinjectScopeTest<NinjectScopeTest_NoBindUutTest.TestScope>
+    public class NoBindUutTest :
+        Scoper.Ninject.AutoScopeTest<NoBindUutTest.TestScope>
     {
-        public class TestScope : NinjectScope
+        public class TestScope : Scoper.Ninject.Scope
         {
             // [DoBind] is superfluous, because it describes the default
             // behavior of the Scope.Kernel object being bound with
@@ -17,7 +17,7 @@ namespace NinjectScopeTest.Test
             [DoBind]
             public Mock<ICloneable> CloneableMock { get; set; }
 
-            // [DoNotBind] specifies to NinjectScopeTest NOT to bind the
+            // [DoNotBind] specifies to Scoper.Ninject.AutoScopeTest NOT to bind the
             // mocked object to Scope.Kernel.  In this case, this is useful
             // in order to specify that because Ninject would not know which
             // ICloneable to use to resolve the dependency for our UUT
@@ -43,7 +43,7 @@ namespace NinjectScopeTest.Test
             private readonly ICloneable _cloneable;
 
             // dependencies will be automatically resolved when Get<T>
-            // is called on NinjectScopeTest.  In this case, T would
+            // is called on Scoper.Ninject.AutoScopeTest.  In this case, T would
             // be TestDependencyInjection
             public TestDependencyInjection(ICloneable cloneable)
             {
@@ -68,7 +68,7 @@ namespace NinjectScopeTest.Test
             // The mocked object we have in scope is still useful!  It just
             // didn't interfere with the Scope.Kernel in resolving the depdencies for
             // our UUT
-            Assert.AreEqual(Scope.CloneableClonedMock.Object, cloned);
+            Assert.AreEqual((object) Scope.CloneableClonedMock.Object, cloned);
         }
     }
 }

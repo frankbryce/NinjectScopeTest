@@ -1,15 +1,15 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NinjectScopeTest.Attribute;
+using Scoper.Attribute;
 
-namespace NinjectScopeTest.Test
+namespace Scoper.Test.Ninject
 {
     [TestClass]
-    public class NinjectScopeTest_NoInstantiateTest :
-        NinjectScopeTest<NinjectScopeTest_NoInstantiateTest.TestScope>
+    public class NoInstantiateTest :
+        Scoper.Ninject.AutoScopeTest<NoInstantiateTest.TestScope>
     {
-        public class TestScope : NinjectScope
+        public class TestScope : Scoper.Ninject.Scope
         {
             [DoNotInstantiate]
             public Mock<ICloneable> CloneableMockNull { get; set; }

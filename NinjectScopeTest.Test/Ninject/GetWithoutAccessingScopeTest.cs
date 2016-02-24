@@ -2,12 +2,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace NinjectScopeTest.Test
+namespace Scoper.Test.Ninject
 {
     [TestClass]
-    public class NinjectScopeTest_GetWithoutAccessingScope : NinjectScopeTest<NinjectScopeTest_GetWithoutAccessingScope.TestScope>
+    public class GetWithoutAccessingScopeTest : Scoper.Ninject.AutoScopeTest<GetWithoutAccessingScopeTest.TestScope>
     {
-        public class TestScope : NinjectScope
+        public class TestScope : Scoper.Ninject.Scope
         {
             public Mock<IComparable> ComparableDependency { get; set; }
         }

@@ -1,4 +1,4 @@
-﻿namespace NinjectScopeTest.Exception
+﻿namespace Scoper.Exception
 {
     /// <summary>
     ///     This Exception can be thrown when a Ninject IKernel

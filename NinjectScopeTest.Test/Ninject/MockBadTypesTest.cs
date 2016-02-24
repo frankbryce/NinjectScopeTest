@@ -1,14 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NinjectScopeTest.Exception;
+using Scoper.Exception;
 
-namespace NinjectScopeTest.Test
+namespace Scoper.Test.Ninject
 {
     [TestClass]
-    public class NinjectScopeTest_MockBadTypesTest :
-        NinjectScopeTest<NinjectScopeTest_MockBadTypesTest.TestScope>
+    public class MockBadTypesTest :
+        Scoper.Ninject.AutoScopeTest<MockBadTypesTest.TestScope>
     {
-        public class TestScope : NinjectScope
+        public class TestScope : Scoper.Ninject.Scope
         {
             public Mock GoodMock { get; set; }
             public Mock<string> BadMock { get; set; }

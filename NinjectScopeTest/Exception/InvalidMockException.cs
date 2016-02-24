@@ -1,4 +1,4 @@
-﻿namespace NinjectScopeTest.Exception
+﻿namespace Scoper.Exception
 {
     public class InvalidMockException : NinjectScopeExceptionBase
     {

@@ -2,12 +2,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace NinjectScopeTest.Test
+namespace Scoper.Test.Ninject
 {
     [TestClass]
-    public class NinjectScopeTest_BasicTest : NinjectScopeTest<NinjectScopeTest_BasicTest.TestScope>
+    public class BasicTest : Scoper.Ninject.AutoScopeTest<BasicTest.TestScope>
     {
-        public class TestScope : NinjectScope
+        public class TestScope : Scoper.Ninject.Scope
         {
             /// <summary>
             /// Auto-mocked by

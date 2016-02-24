@@ -1,4 +1,4 @@
-namespace NinjectScopeTest.Attribute
+namespace Scoper.Attribute
 {
     /// <summary>
     ///     This is the default behavior for properties

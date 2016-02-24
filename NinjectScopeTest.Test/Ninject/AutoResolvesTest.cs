@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NinjectScopeTest.Test
+namespace Scoper.Test.Ninject
 {
     [TestClass]
-    public class NinjectAutoScopeTest_AutoResolves : NinjectAutoScopeTest
+    public class AutoScopeTest_AutoResolves : Scoper.Ninject.AutoScopeTest
     {
         // ReSharper disable ClassNeverInstantiated.Local
         public class TestUutSealedDep

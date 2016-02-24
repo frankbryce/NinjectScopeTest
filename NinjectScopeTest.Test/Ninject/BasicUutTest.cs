@@ -2,21 +2,21 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace NinjectScopeTest.Test
+namespace Scoper.Test.Ninject
 {
-    // Derive your Unit test class from NinjectScopeTest<T>
+    // Derive your Unit test class from Scoper.Ninject.AutoScopeTest<T>
     // where T is the type of your Scope object
     [TestClass]
-    public class NinjectScopeTest_BasicUutTest :
-        NinjectScopeTest<NinjectScopeTest_BasicUutTest.TestScope>
+    public class BasicUutTest :
+        Scoper.Ninject.AutoScopeTest<BasicUutTest.TestScope>
     {
         // create your own scope object, which is used to 
         // hold the data that your test class needs
         // to perform the test.  Any properties of type Mock<T>
         // where T is an interface or a non-sealed class
         // will be automatically instantiated and bound
-        // to the Ninject Kernel on NinjectScope
-        public class TestScope : NinjectScope
+        // to the Ninject Kernel on Scoper.Ninject.Scope
+        public class TestScope : Scoper.Ninject.Scope
         {
             public Mock<ICloneable> CloneableMock { get; set; }
             public object ClonedObject { get; set; }
@@ -40,7 +40,7 @@ namespace NinjectScopeTest.Test
             private readonly ICloneable _cloneable;
 
             // dependencies will be automatically resolved when Get<T>
-            // is called on NinjectScopeTest.  In this case, T would
+            // is called on Scoper.Ninject.AutoScopeTest.  In this case, T would
             // be TestDependencyInjection
             public TestDependencyInjection(
                 ICloneable cloneable,

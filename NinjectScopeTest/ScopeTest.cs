@@ -1,42 +1,38 @@
-﻿using System;
+using System;
 using System.Linq;
 using log4net;
 using Moq;
-using Ninject;
-using NinjectScopeTest.Attribute;
-using NinjectScopeTest.Exception;
+using Scoper.Attribute;
+using Scoper.Exception;
 
-namespace NinjectScopeTest
+namespace Scoper
 {
     /// <summary>
-    /// Default NinjectScopeTest uses the default NinjectScope for minimal setup for 
-    /// the simplest tests.
+    /// Use the default scope when none is given.
     /// </summary>
-    public abstract class NinjectScopeTest : NinjectScopeTest<NinjectScope>
+    public class ScopeTest : ScopeTest<Scope>
     {
     }
 
     /// <summary>
-    ///     This is the base class which can be derived from in your unit testing
-    ///     class in order to gain the benefits of an auto-mocking behavior
-    ///     for your Ninject dependencies.  Any properties of type Mock<T>
-    ///     for any interface or non-sealed class T will be automatically
-    ///     Instantiated and bound to the Kernel object on Scope.  Use the
-    ///     attributes [NoBind] and [NoInstantiate] if you wish to override
-    ///     that default behavior on any properties of type Mock<T> on your
-    ///     Scope object.  Any other properties, methods, or fields will be
-    ///     ignored by the NinjectScopeTest base class to use for any other
-    ///     scope properties or functionality that you may want.
+    /// This is the base class which can be derived from in your unit testing
+    /// class in order to gain the benefits of ScopeTest.  For the base ScopeTest
+    /// the benefits include having an overridable Initialize() method that is
+    /// called the first time that the instance of this object is accessed.  By
+    /// contrast [TestInitialize] methods are called once per test method.  In this
+    /// base implementation, the attribute around binding are ignored.  To take
+    /// advantage of the auto-mocking features of AutoScopeTest, use one of the
+    /// derived DI based scopes depending on your preferred DI library.
     /// </summary>
     /// <typeparam name="T">
-    ///     The type of the derived Scope object that is used
-    ///     as the scope for your unit test class.  NinjectScopeTest needs this
-    ///     type in order to instantiate the scope when the tests load.
+    /// The type of the derived Scope object that is used
+    /// as the scope for your unit test class.  Scoper.Ninject.AutoScopeTest needs this
+    /// type in order to instantiate the scope when the tests load.
     /// </typeparam>
-    public abstract class NinjectScopeTest<T> where T : NinjectScope, new()
+    public class ScopeTest<T> where T : Scope, new()
     {
         protected static readonly ILog Logger =
-            LogManager.GetLogger(typeof (NinjectScopeTest<T>));
+            LogManager.GetLogger(typeof (AutoScopeTest<T>));
         private T _scope;
 
         protected T Scope
@@ -59,30 +55,42 @@ namespace NinjectScopeTest
             }
         }
 
+        /// <summary>
+        /// In the base ScopeTest, we simply return the default instance of the object,
+        /// which for non-value types is null.  This is because the base Scope test has
+        /// no dependency injection container in order to 
+        /// </summary>
+        /// <param name="type">The type of object to get</param>
+        /// <returns>The default value for the given type</returns>
         protected virtual object Get(Type type)
         {
-            try
-            {
-                return Scope.Kernel.Get(type);
-            }
-            catch (ActivationException ex)
-            {
-                throw new GetInstanceException(ex);
-            }
-            catch (System.Exception ex)
-            {
-                throw new InternalException(ex);
-            }
+            return DefaultValue.Get(type);
         }
 
-        protected virtual U Get<U>()
+        /// <summary>
+        /// In the base ScopeTest, we simply return the default instance of the object,
+        /// which for non-value types is null.  This is because the base Scope test has
+        /// no dependency injection container in order to 
+        /// </summary>
+        /// <returns>The default value for the given type</returns>
+        protected U Get<U>()
         {
-            return (U) Get(typeof(U));
+            return (U)Get(typeof(U));
+        }
+
+        protected virtual void InitializeDI()
+        {
+            // no op
+        }
+
+        protected virtual void RegisterObject(Type type, object obj)
+        {
+            // no op
         }
 
         private void Initialize()
         {
-            _scope.Kernel = new StandardKernel(_scope.Settings);
+            InitializeDI();
 
             foreach (var prop in typeof (T).GetProperties())
             {
@@ -142,7 +150,7 @@ namespace NinjectScopeTest
 
                 if (doBind)
                 {
-                    _scope.Kernel.Bind(bindType).ToConstant(mockObject);
+                    RegisterObject(bindType, mockObject);
                 }
             }
 

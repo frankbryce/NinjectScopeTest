@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NinjectScopeTest.Test
+namespace Scoper.Test.Ninject
 {
     [TestClass]
-    public class NinjectScopeTestDefaultScope : NinjectScopeTest
+    public class DefaultScopeTest : Scoper.Ninject.AutoScopeTest
     {
         private class TestUut
         {

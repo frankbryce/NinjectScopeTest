@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinjectScopeTest", "NinjectScopeTest\NinjectScopeTest.csproj", "{4E6EEA43-F798-4E27-9075-F95DD1F46431}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoper", "NinjectScopeTest\Scoper.csproj", "{4E6EEA43-F798-4E27-9075-F95DD1F46431}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinjectScopeTest.Test", "NinjectScopeTest.Test\NinjectScopeTest.Test.csproj", "{A50E87A6-114D-43A4-8C80-CC79DE29E3C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoper.Test", "NinjectScopeTest.Test\Scoper.Test.csproj", "{A50E87A6-114D-43A4-8C80-CC79DE29E3C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

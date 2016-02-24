@@ -6,8 +6,8 @@
     <ProjectGuid>{A50E87A6-114D-43A4-8C80-CC79DE29E3C5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NinjectScopeTest.Test</RootNamespace>
-    <AssemblyName>NinjectScopeTest.Test</AssemblyName>
+    <RootNamespace>Scoper.Test</RootNamespace>
+    <AssemblyName>Scoper.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -56,32 +56,38 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="NinjectAutoScopeTest_AutoResolves.cs" />
-    <Compile Include="NinjectScopeTest_BadBindUutTest.cs" />
-    <Compile Include="NinjectScopeTest_BasicNinjectSettingsTest.cs" />
-    <Compile Include="NinjectScopeTest_BasicUutTest.cs" />
-    <Compile Include="NinjectScopeTestDefaultScope.cs" />
-    <Compile Include="NinjectScopeTest_GetWithoutAccessingScope.cs" />
-    <Compile Include="NinjectScopeTest_NoBindUutTest.cs" />
-    <Compile Include="NinjectScopeTest_BindInstantiateTest.cs" />
-    <Compile Include="NinjectScopeTest_NoInstantiateTest.cs" />
-    <Compile Include="NinjectScopeTest_MockBadTypesTest.cs" />
-    <Compile Include="NinjectScopeTest_BasicTest.cs" />
+    <Compile Include="Ninject\AutoResolvesTest.cs" />
+    <Compile Include="Ninject\BadBindUutTest.cs" />
+    <Compile Include="Ninject\BasicNinjectSettingsTest.cs" />
+    <Compile Include="Ninject\BasicUutTest.cs" />
+    <Compile Include="Ninject\DefaultScopeTest.cs" />
+    <Compile Include="Ninject\GetWithoutAccessingScopeTest.cs" />
+    <Compile Include="Ninject\NoBindUutTest.cs" />
+    <Compile Include="Ninject\BindInstantiateTest.cs" />
+    <Compile Include="Ninject\NoInstantiateTest.cs" />
+    <Compile Include="Ninject\MockBadTypesTest.cs" />
+    <Compile Include="Ninject\BasicTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScopeTest\BasicDerivedScopeTest.cs" />
+    <Compile Include="ScopeTest\BasicScopeTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NinjectScopeTest\NinjectScopeTest.csproj">
+    <ProjectReference Include="..\NinjectScopeTest\Scoper.csproj">
       <Project>{4E6EEA43-F798-4E27-9075-F95DD1F46431}</Project>
-      <Name>NinjectScopeTest</Name>
+      <Name>Scoper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

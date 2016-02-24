@@ -1,15 +1,15 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NinjectScopeTest.Attribute;
+using Scoper.Attribute;
 
-namespace NinjectScopeTest.Test
+namespace Scoper.Test.Ninject
 {
     [TestClass]
-    public class NinjectScopeTest_BindInstantiateTest :
-        NinjectScopeTest<NinjectScopeTest_BindInstantiateTest.TestScope>
+    public class BindInstantiateTest :
+        Scoper.Ninject.AutoScopeTest<BindInstantiateTest.TestScope>
     {
-        public class TestScope : NinjectScope
+        public class TestScope : Scoper.Ninject.Scope
         {
             [DoNotInstantiate, DoNotBind]
             public Mock<ICloneable> NoInstNoBind { get; set; }
@@ -69,7 +69,7 @@ namespace NinjectScopeTest.Test
         {
             Assert.IsNotNull(Scope.InstNoBind);
             var uut = Get<TestDependencyInjection>();
-            Assert.AreNotEqual(uut.Comparable, Scope.InstNoBind.Object);
+            Assert.AreNotEqual((object) uut.Comparable, Scope.InstNoBind.Object);
         }
 
         [TestMethod]
@@ -77,7 +77,7 @@ namespace NinjectScopeTest.Test
         {
             Assert.IsNull(Scope.NoInstBind);
             var uut = Get<TestDependencyInjection>();
-            Assert.AreEqual(uut.Cloneable, null);
+            Assert.AreEqual((object) uut.Cloneable, null);
         }
 
         [TestMethod]
@@ -85,7 +85,7 @@ namespace NinjectScopeTest.Test
         {
             Assert.IsNotNull(Scope.InstBind);
             var uut = Get<TestDependencyInjection>();
-            Assert.AreEqual(uut.Comparable, Scope.InstBind.Object);
+            Assert.AreEqual((object) uut.Comparable, Scope.InstBind.Object);
         }
     }
 }
