@@ -38,6 +38,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.0.0\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Moq, Version=4.2.1312.1319, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.2.1312.1319\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
@@ -79,7 +87,7 @@
     <Compile Include="ScopeTest\BasicScopeTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NinjectScopeTest\Scoper.csproj">
+    <ProjectReference Include="..\Scoper\Scoper.csproj">
       <Project>{4E6EEA43-F798-4E27-9075-F95DD1F46431}</Project>
       <Name>Scoper</Name>
     </ProjectReference>

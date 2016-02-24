@@ -1,24 +1,25 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>NinjectScopeTest</id>
-    <version>0.5.1</version>
-    <title>Moq Auto-Initialization and Ninject Auto-Binding for Test Scopes</title>
+    <id>Scoper</id>
+    <version>0.5.2</version>
+    <title>Moq Auto-Initialization and DI Auto-Binding for Unit Tests</title>
     <authors>John Carpenter</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-        A package for making auto-mocking easier and intuitive with Ninject and Moq
+        A package for making auto-mocking easier and intuitive with Moq
     </description>
     <releaseNotes>
-      Fixing dependency issue where specific version of log4net and Moq are expected by
-      the application that uses NinjectScopeTest.
+        Changed the name of the package to lessen ties with Ninject.
+        DI containers Ninject and Autofac now supported.
     </releaseNotes>
     <copyright>Copyright 2016-</copyright>
-    <tags>Ninject Moq auto-mock mock</tags>
+    <tags>Moq auto-mock mock Ninject Autofac</tags>
     <dependencies>
       <dependency id="log4net" version="[2.0.0,)" />
       <dependency id="Moq" version="[4.2.1312.1319,)" />
       <dependency id="Ninject" version="[3.2.0.0,)" />
+      <dependency id="Autofac" version="[3.0.0.0,)" />
     </dependencies>
   </metadata>
 </package>
