@@ -5,7 +5,7 @@ using Moq;
 namespace Scoper.Test.ScopeTest
 {
     [TestClass]
-    public class BasicScopeTest : global::Scoper.ScopeTest
+    public class BasicScopeTest : Scoper.ScopeTest
     {
         [TestMethod]
         public void AssertNoRegistrationsCausesNoErrors()

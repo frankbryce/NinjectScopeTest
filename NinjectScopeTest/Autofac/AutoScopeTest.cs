@@ -2,7 +2,7 @@
 using Ninject;
 using Scoper.Exception;
 
-namespace Scoper.Ninject
+namespace Scoper.Autofac
 {
     /// <summary>
     /// Default Scoper.Ninject.AutoScopeTest uses the default Scoper.Ninject.Scope for minimal setup for 

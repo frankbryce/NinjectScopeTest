@@ -65,6 +65,8 @@
     <Compile Include="Exception\InvalidMockException.cs" />
     <Compile Include="Exception\NinjectScopeExceptionBase.cs" />
     <Compile Include="AutoScopeTest.cs" />
+    <Compile Include="Autofac\AutoScopeTest.cs" />
+    <Compile Include="Autofac\Scope.cs" />
     <Compile Include="Ninject\Scope.cs" />
     <Compile Include="Ninject\AutoScopeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

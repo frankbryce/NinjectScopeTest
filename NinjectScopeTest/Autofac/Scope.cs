@@ -1,6 +1,6 @@
 ﻿using Ninject;
 
-namespace Scoper.Ninject
+namespace Scoper.Autofac
 {
     /// <summary>
     /// Scoper.Ninject.AutoScopeTest properly handles automocking the properties on

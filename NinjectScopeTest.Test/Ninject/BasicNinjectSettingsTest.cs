@@ -6,9 +6,9 @@ using Ninject.Infrastructure;
 namespace Scoper.Test.Ninject
 {
     [TestClass]
-    public class BasicNinjectSettingsTest : global::Scoper.Ninject.AutoScopeTest<BasicNinjectSettingsTest.TestScope>
+    public class BasicNinjectSettingsTest : Scoper.Ninject.AutoScopeTest<BasicNinjectSettingsTest.TestScope>
     {
-        public class TestScope : global::Scoper.Ninject.Scope
+        public class TestScope : Scoper.Ninject.Scope
         {
 
             public override INinjectSettings Settings => new NinjectSettings
