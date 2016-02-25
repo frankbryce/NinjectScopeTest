@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Scoper</id>
+    <version>0.5.2</version>
+    <title>Moq Auto-Initialization for Unit Tests</title>
+    <authors>John Carpenter</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+        A package for making auto-mocking easier and intuitive with Moq
+    </description>
+    <releaseNotes>
+        Changed the name of the package to lessen ties with Ninject.
+        DI containers Ninject and Autofac now supported in the two packages
+        Scoper.Autofac and Scoper.Ninject.  This package does not contain
+        any DI container in case you only want auto-initialization of Moq.Mock<>
+        properties on scope.
+    </releaseNotes>
+    <copyright>Copyright 2016-</copyright>
+    <tags>Moq auto-mock mock Autofac</tags>
+    <dependencies>
+      <dependency id="log4net" version="[2.0.0,)" />
+      <dependency id="Moq" version="[4.2.1312.1319,)" />
+    </dependencies>
+  </metadata>
+</package>

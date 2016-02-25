@@ -21,9 +21,15 @@ namespace Scoper
     /// <typeparam name="T"></typeparam>
     public abstract class AutoScopeTest<T> : ScopeTest<T> where T : Scope, new()
     {
-        protected internal abstract bool _hasRegistration(Type type);
+        protected internal virtual bool _hasRegistration(Type type)
+        {
+            return false;
+        }
 
-        protected internal abstract object DiContainerGet(Type type);
+        protected internal virtual object DiContainerGet(Type type)
+        {
+            return DefaultValue.Get(type);
+        }
 
         /// <summary>
         /// This will attempt to get an instance of type type via the kernel as it is
@@ -48,7 +54,7 @@ namespace Scoper
             catch (GetInstanceException)
             {
                 // if activation fails in Ninject, let's bind all of the dependencies that could be used, then
-                // call base again to use the same constructor overloading rules that are used by defauly in Ninject.
+                // call base again to use the same constructor overloading rules that are used by default in Ninject.
                 var constructors = type.GetConstructors();
                 var constructorToUse = constructors.OrderBy(x => x.GetParameters().Length).First();
                 foreach (var param in constructorToUse.GetParameters())
