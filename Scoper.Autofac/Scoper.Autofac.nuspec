@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Scoper.Autofac</id>
-    <version>0.5.2</version>
+    <version>0.5.3</version>
     <title>Moq Auto-Initialization and Autofac Auto-Binding for Unit Tests</title>
     <authors>John Carpenter</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -10,9 +10,7 @@
         A package for making auto-mocking easier and intuitive with Moq
     </description>
     <releaseNotes>
-        Changed the name of the package to lessen ties with Ninject.
-        DI containers Ninject and Autofac now supported in the two packages
-        Scoper.Autofac and Scoper.Ninject.
+        Patch to fix an issue that DI dependencies were installed for .net version 452 instead of 45
     </releaseNotes>
     <copyright>Copyright 2016-</copyright>
     <tags>Moq auto-mock mock Autofac</tags>
