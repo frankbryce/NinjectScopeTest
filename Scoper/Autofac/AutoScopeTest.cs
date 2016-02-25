@@ -1,5 +1,7 @@
 ﻿using System;
-using Ninject;
+using Autofac;
+using Autofac.Core;
+using Autofac.Core.Registration;
 using Scoper.Exception;
 
 namespace Scoper.Autofac
@@ -16,26 +18,43 @@ namespace Scoper.Autofac
     {
         protected internal override bool _hasRegistration(Type type)
         {
-            return Scope.Kernel.TryGet(type) != null;
+            var obj = DefaultValue.Get(type);
+            Scope.Container.TryResolve(type, out obj);
+            return obj != DefaultValue.Get(type);
         }
 
         protected override void InitializeDI()
         {
-            Scope.Kernel = new StandardKernel(Scope.Settings);
+            Scope.Container = new ContainerBuilder().Build(Scope.Options);
         }
 
         protected override void RegisterObject(Type type, object obj)
         {
-            Scope.Kernel.Bind(type).ToConstant(obj);
+            if (obj != null)
+            {
+                var builder = new ContainerBuilder();
+                builder.RegisterInstance(obj).As(type);
+                builder.Update(Scope.Container, Scope.Options);
+            }
         }
 
         protected internal override object DiContainerGet(Type type)
         {
             try
             {
-                return Scope.Kernel.Get(type);
+                if (!_hasRegistration(type))
+                {
+                    var builder = new ContainerBuilder();
+                    builder.RegisterType(type).As(type);
+                    builder.Update(Scope.Container, Scope.Options);
+                }
+                return Scope.Container.Resolve(type);
             }
-            catch (ActivationException ex)
+            catch (ComponentNotRegisteredException ex)
+            {
+                throw new GetInstanceException(ex);
+            }
+            catch (DependencyResolutionException ex)
             {
                 throw new GetInstanceException(ex);
             }

@@ -66,6 +66,7 @@ namespace Scoper
                             .GetConstructor(Type.EmptyTypes)
                             .Invoke(new object[] { }))
                             .Object;
+
                     RegisterObject(paramType, obj);
                 }
                 return DiContainerGet(type);

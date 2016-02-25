@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using Autofac;
+using Autofac.Builder;
 
 namespace Scoper.Autofac
 {
@@ -11,18 +12,19 @@ namespace Scoper.Autofac
     /// </summary>
     public class Scope : Scoper.Scope
     {
-        public StandardKernel Kernel { get; set; }
+        /// <summary>
+        /// Autofac container which holds the result of the registrations
+        /// </summary>
+        public IContainer Container { get; set; }
 
         /// <summary>
         /// Provide the ability of the derived scope to override the default
-        /// settings that are used for the StandardKernel.  Simply override
+        /// options that are used for the ContainerBuilder.Build Method.  Override
         /// this property in your test scope and provide the settings that
         /// you would like to use.  The default settings is
         /// 
-        /// new NinjectSettings {
-        ///     AllowNullInjection = true
-        /// };
+        /// ContainerBuildOptions.None;
         /// </summary>
-        public virtual INinjectSettings Settings => new NinjectSettings { AllowNullInjection = true };
+        public virtual ContainerBuildOptions Options => ContainerBuildOptions.None;
     }
 }
