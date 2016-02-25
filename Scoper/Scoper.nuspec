@@ -13,7 +13,7 @@
         Changed the name of the package to lessen ties with Ninject.
         DI containers Ninject and Autofac now supported in the two packages
         Scoper.Autofac and Scoper.Ninject.  This package does not contain
-        any DI container in case you only want auto-initialization of Moq.Mock<>
+        any DI container in case you only want auto-initialization of Moq.Mock
         properties on scope.
     </releaseNotes>
     <copyright>Copyright 2016-</copyright>
@@ -23,4 +23,7 @@
       <dependency id="Moq" version="[4.2.1312.1319,)" />
     </dependencies>
   </metadata>
+  <files>
+    <file src="bin\Release\Scoper.dll" target="lib\net45" />
+  </files>
 </package>

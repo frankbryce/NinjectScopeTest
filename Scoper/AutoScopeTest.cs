@@ -19,13 +19,16 @@ namespace Scoper
     /// and will not return any meaningful values for your dependencies.
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public abstract class AutoScopeTest<T> : ScopeTest<T> where T : Scope, new()
     {
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal virtual bool _hasRegistration(Type type)
         {
             return false;
         }
 
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal virtual object DiContainerGet(Type type)
         {
             return DefaultValue.Get(type);
