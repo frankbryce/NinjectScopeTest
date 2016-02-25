@@ -92,6 +92,14 @@
     <Compile Include="ScopeTest\BasicScopeTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Scoper.Autofac\Scoper.Autofac.csproj">
+      <Project>{6a2f0d87-554b-4201-9814-19812c45193e}</Project>
+      <Name>Scoper.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Scoper.Ninject\Scoper.Ninject.csproj">
+      <Project>{7488e2aa-f843-4207-9471-3eb8fcefcc1d}</Project>
+      <Name>Scoper.Ninject</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Scoper\Scoper.csproj">
       <Project>{4E6EEA43-F798-4E27-9075-F95DD1F46431}</Project>
       <Name>Scoper</Name>

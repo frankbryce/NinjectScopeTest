@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoper", "Scoper\Scoper.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoper.Test", "Scoper.Test\Scoper.Test.csproj", "{A50E87A6-114D-43A4-8C80-CC79DE29E3C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoper.Ninject", "Scoper.Ninject\Scoper.Ninject.csproj", "{7488E2AA-F843-4207-9471-3EB8FCEFCC1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoper.Autofac", "Scoper.Autofac\Scoper.Autofac.csproj", "{6A2F0D87-554B-4201-9814-19812C45193E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{A50E87A6-114D-43A4-8C80-CC79DE29E3C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A50E87A6-114D-43A4-8C80-CC79DE29E3C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A50E87A6-114D-43A4-8C80-CC79DE29E3C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7488E2AA-F843-4207-9471-3EB8FCEFCC1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7488E2AA-F843-4207-9471-3EB8FCEFCC1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7488E2AA-F843-4207-9471-3EB8FCEFCC1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7488E2AA-F843-4207-9471-3EB8FCEFCC1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A2F0D87-554B-4201-9814-19812C45193E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A2F0D87-554B-4201-9814-19812C45193E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A2F0D87-554B-4201-9814-19812C45193E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A2F0D87-554B-4201-9814-19812C45193E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,7 @@
 
 namespace Scoper
 {
-    internal static class DefaultValue
+    public static class DefaultValue
     {
         /// <summary>
         /// Returns the default value for a given type dynamically.  Useful

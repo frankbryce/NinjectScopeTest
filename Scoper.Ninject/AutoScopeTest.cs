@@ -14,7 +14,7 @@ namespace Scoper.Ninject
 
     public abstract class AutoScopeTest<T> : Scoper.AutoScopeTest<T> where T : Scope, new()
     {
-        protected internal override bool _hasRegistration(Type type)
+        protected override bool _hasRegistration(Type type)
         {
             return Scope.Kernel.TryGet(type) != null;
         }
@@ -29,7 +29,7 @@ namespace Scoper.Ninject
             Scope.Kernel.Bind(type).ToConstant(obj);
         }
 
-        protected internal override object DiContainerGet(Type type)
+        protected override object DiContainerGet(Type type)
         {
             try
             {

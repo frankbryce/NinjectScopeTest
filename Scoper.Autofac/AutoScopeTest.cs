@@ -16,7 +16,7 @@ namespace Scoper.Autofac
 
     public abstract class AutoScopeTest<T> : Scoper.AutoScopeTest<T> where T : Scope, new()
     {
-        protected internal override bool _hasRegistration(Type type)
+        protected override bool _hasRegistration(Type type)
         {
             var obj = DefaultValue.Get(type);
             Scope.Container.TryResolve(type, out obj);
@@ -38,7 +38,7 @@ namespace Scoper.Autofac
             }
         }
 
-        protected internal override object DiContainerGet(Type type)
+        protected override object DiContainerGet(Type type)
         {
             try
             {

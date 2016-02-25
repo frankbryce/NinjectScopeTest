@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>Scoper</id>
+    <id>Scoper.Autofac</id>
     <version>0.5.2</version>
-    <title>Moq Auto-Initialization and DI Auto-Binding for Unit Tests</title>
+    <title>Moq Auto-Initialization and Autofac Auto-Binding for Unit Tests</title>
     <authors>John Carpenter</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
@@ -11,14 +11,14 @@
     </description>
     <releaseNotes>
         Changed the name of the package to lessen ties with Ninject.
-        DI containers Ninject and Autofac now supported.
+        DI containers Ninject and Autofac now supported in the two packages
+        Scoper.Autofac and Scoper.Ninject.
     </releaseNotes>
     <copyright>Copyright 2016-</copyright>
-    <tags>Moq auto-mock mock Ninject Autofac</tags>
+    <tags>Moq auto-mock mock Autofac</tags>
     <dependencies>
       <dependency id="log4net" version="[2.0.0,)" />
       <dependency id="Moq" version="[4.2.1312.1319,)" />
-      <dependency id="Ninject" version="[3.2.0.0,)" />
       <dependency id="Autofac" version="[3.2.0,)" />
     </dependencies>
   </metadata>
