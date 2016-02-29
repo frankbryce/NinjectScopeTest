@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Scoper.Attribute;
 
 namespace Scoper.Test.Autofac
 {
@@ -13,6 +14,7 @@ namespace Scoper.Test.Autofac
             /// Auto-mocked by
             /// </summary>
             public Mock<ICloneable> CloneableMock { get; set; }
+            [DoNotBind]
             public Mock<ICloneable> CloneableClonedMock { get; set; }
             public Mock ObjectMock { get; set; }
             public object NonMockObject { get; set; }
@@ -26,6 +28,21 @@ namespace Scoper.Test.Autofac
                 CloneableClonedMock.Setup(x => x.Clone()).Returns(CloneableMock.Object);
 
                 InitializedNonMockObject = new object();
+            }
+        }
+
+        public class Uut
+        {
+            private readonly ICloneable _clonableDep;
+
+            public Uut(ICloneable clonableDep)
+            {
+                _clonableDep = clonableDep;
+            }
+
+            public void CallClone()
+            {
+                _clonableDep.Clone();
             }
         }
 
@@ -65,6 +82,14 @@ namespace Scoper.Test.Autofac
         public void NinjectScopeTest_ShouldInitializeNonMockObjectsExplicitly()
         {
             Assert.IsNotNull(Scope.InitializedNonMockObject);
+        }
+
+        [TestMethod]
+        public void InjectedDependencyShouldMatchScopesMock()
+        {
+            var uut = Get<Uut>();
+            uut.CallClone();
+            Scope.CloneableMock.Verify(x => x.Clone(), Times.Once);
         }
     }
 }
