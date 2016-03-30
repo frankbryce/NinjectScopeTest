@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoper.Ninject", "Scoper.Ni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoper.Autofac", "Scoper.Autofac\Scoper.Autofac.csproj", "{6A2F0D87-554B-4201-9814-19812C45193E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PackageScripts", "PackageScripts", "{9077A255-3AC0-4D52-B567-6963C45AF35E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

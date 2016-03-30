@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Scoper.Autofac.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Scoper\Scoper.csproj">
