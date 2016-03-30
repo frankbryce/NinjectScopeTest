@@ -10,9 +10,6 @@ namespace Scoper.Test.Ninject
     {
         public class TestScope : Scoper.Ninject.Scope
         {
-            /// <summary>
-            /// Auto-mocked by
-            /// </summary>
             public Mock<ICloneable> CloneableMock { get; set; }
             [DoNotBind]
             public Mock<ICloneable> CloneableClonedMock { get; set; }
@@ -24,7 +21,6 @@ namespace Scoper.Test.Ninject
             {
                 CloneableMock.Setup(x => x.Clone()).Returns(CloneableClonedMock.Object);
 
-                // it's the ciiiiiiircle of liiiiiiiife
                 CloneableClonedMock.Setup(x => x.Clone()).Returns(CloneableMock.Object);
 
                 InitializedNonMockObject = new object();

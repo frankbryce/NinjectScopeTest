@@ -10,9 +10,6 @@ namespace Scoper.Test.Autofac
     {
         public class TestScope : Scoper.Autofac.Scope
         {
-            /// <summary>
-            /// Auto-mocked by
-            /// </summary>
             public Mock<ICloneable> CloneableMock { get; set; }
             [DoNotBind]
             public Mock<ICloneable> CloneableClonedMock { get; set; }
@@ -24,7 +21,6 @@ namespace Scoper.Test.Autofac
             {
                 CloneableMock.Setup(x => x.Clone()).Returns(CloneableClonedMock.Object);
 
-                // it's the ciiiiiiircle of liiiiiiiife
                 CloneableClonedMock.Setup(x => x.Clone()).Returns(CloneableMock.Object);
 
                 InitializedNonMockObject = new object();
