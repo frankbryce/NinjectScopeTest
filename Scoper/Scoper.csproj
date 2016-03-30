@@ -66,7 +66,6 @@
     <Compile Include="ScopeTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="build.bat" />
     <None Include="packages.config" />
     <None Include="Scoper.nuspec" />
   </ItemGroup>

@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Scoper.Ninject</id>
-    <version>0.5.3</version>
+    <version>$version$</version>
     <title>Moq Auto-Initialization and Ninject Auto-Binding for Unit Tests</title>
     <authors>John Carpenter</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -21,7 +21,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Scoper.Ninject.dll" target="lib\net45" />
-    <file src="bin\Release\Scoper.dll" target="lib\net45" />
+    <file src="bin\$configuration$\Scoper.Ninject.dll" target="lib\net45" />
+    <file src="bin\$configuration$\Scoper.dll" target="lib\net45" />
   </files>
 </package>
