@@ -4,7 +4,7 @@ if "%config%" == "" (
    set config=Release
 )
 
-set version=0.5.4
+set version=1.0.0
 if not "%PackageVersion%" == "" (
    set version=%PackageVersion%
 )
@@ -20,6 +20,6 @@ mkdir Build
 mkdir Build\lib
 mkdir Build\lib\net45
 
-%nuget% pack "Scoper\Scoper.nuspec" -NoPackageAnalysis -verbosity detailed -o Build -Version %version% -p Configuration="%config%"
-%nuget% pack "Scoper.Ninject\Scoper.Ninject.nuspec" -NoPackageAnalysis -verbosity detailed -o Build -Version %version% -p Configuration="%config%"
 %nuget% pack "Scoper.Autofac\Scoper.Autofac.nuspec" -NoPackageAnalysis -verbosity detailed -o Build -Version %version% -p Configuration="%config%"
+%nuget% pack "Scoper.Ninject\Scoper.Ninject.nuspec" -NoPackageAnalysis -verbosity detailed -o Build -Version %version% -p Configuration="%config%"
+%nuget% pack "Scoper\Scoper.nuspec" -NoPackageAnalysis -verbosity detailed -o Build -Version %version% -p Configuration="%config%"
