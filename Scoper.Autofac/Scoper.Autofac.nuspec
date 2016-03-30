@@ -10,7 +10,7 @@
         A package for making auto-mocking easier and intuitive with Moq
     </description>
     <releaseNotes>
-        Patch to fix an issue that DI dependencies were installed for .net version 452 instead of 45
+        Using MyGet as the build server for Scoper
     </releaseNotes>
     <copyright>Copyright 2016-</copyright>
     <tags>Moq auto-mock mock Autofac</tags>
