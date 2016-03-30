@@ -23,6 +23,15 @@ namespace Scoper.Ninject
         ///     AllowNullInjection = true
         /// };
         /// </summary>
-        public virtual INinjectSettings Settings => new NinjectSettings { AllowNullInjection = true };
+        public virtual INinjectSettings Settings
+        {
+            get
+            {
+                return new NinjectSettings
+                {
+                    AllowNullInjection = true
+                };
+            }
+        }
     }
 }

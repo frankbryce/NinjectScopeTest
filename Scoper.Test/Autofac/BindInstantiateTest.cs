@@ -53,8 +53,9 @@ namespace Scoper.Test.Autofac
             {
             }
 
-            public ICloneable Cloneable => _clonable;
-            public IComparable Comparable => _comparable;
+            public ICloneable Cloneable { get { return _clonable; } }
+
+            public IComparable Comparable { get { return _comparable; } }
         }
 
         [TestMethod]

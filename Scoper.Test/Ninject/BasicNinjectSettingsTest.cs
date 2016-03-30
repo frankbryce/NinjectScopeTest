@@ -11,12 +11,16 @@ namespace Scoper.Test.Ninject
         public class TestScope : Scoper.Ninject.Scope
         {
 
-            public override INinjectSettings Settings => new NinjectSettings
-            {
-                // singleton override behavior so all registered objects end
-                // up being singleton
-                DefaultScopeCallback = StandardScopeCallbacks.Singleton
-            };
+            public override INinjectSettings Settings {
+                get {
+                    return new NinjectSettings
+                    {
+                        // singleton override behavior so all registered objects end
+                        // up being singleton
+                        DefaultScopeCallback = StandardScopeCallbacks.Singleton
+                    };
+                }
+            }
 
             public class TestComparable : IComparable
             {
@@ -50,12 +54,18 @@ namespace Scoper.Test.Ninject
         public class TestScope : Scoper.Ninject.Scope
         {
 
-            public override INinjectSettings Settings => new NinjectSettings
+            public override INinjectSettings Settings
             {
-                // singleton override behavior so all registered objects end
-                // up being singleton
-                DefaultScopeCallback = StandardScopeCallbacks.Transient
-            };
+                get
+                {
+                    return new NinjectSettings
+                    {
+                        // singleton override behavior so all registered objects end
+                        // up being transient
+                        DefaultScopeCallback = StandardScopeCallbacks.Transient
+                    };
+                }
+            }
 
             public class TestComparable : IComparable
             {

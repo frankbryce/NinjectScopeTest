@@ -25,6 +25,9 @@ namespace Scoper.Autofac
         /// 
         /// ContainerBuildOptions.None;
         /// </summary>
-        public virtual ContainerBuildOptions Options => ContainerBuildOptions.None;
+        public virtual ContainerBuildOptions Options
+        {
+            get { return ContainerBuildOptions.None; }
+        }
     }
 }

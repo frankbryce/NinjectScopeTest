@@ -19,7 +19,7 @@ namespace Scoper.Test.ScopeTest
     public class BasicDerivedScopeTestScope : Scope
     {
         public Mock<IComparable> comparableMock { get; set; }
-        public int comparableResult => 123;
+        public int comparableResult { get { return 123; } }
 
         public override void Initialize()
         {
