@@ -53,7 +53,7 @@ namespace Scoper.Test.ScopeTest
         [TestMethod]
         public void MockShouldBeRegisteredWithDi()
         {
-            Assert.AreEqual(Scope.GenericMock.Object, DiContainerGet(typeof(ITestDep<>).MakeGenericType(typeof(ICloneable))));
+            Assert.AreEqual(Scope.GenericMock.Object, DiGet(typeof(ITestDep<>).MakeGenericType(typeof(ICloneable))));
         }
 
         /// <summary>

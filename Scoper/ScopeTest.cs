@@ -4,6 +4,7 @@ using log4net;
 using Moq;
 using Scoper.Attribute;
 using Scoper.Exception;
+using System.Collections.Generic;
 
 namespace Scoper
 {
@@ -78,19 +79,46 @@ namespace Scoper
             return (U)Get(typeof(U));
         }
 
-        protected virtual void InitializeDI()
+        protected virtual void DiInitialize()
         {
             // no op
         }
 
-        protected virtual void RegisterObject(Type type, object obj)
+        protected virtual void DiRegister(Type type, object obj)
         {
             // no op
+        }
+
+        protected Dictionary<object, List<Mock>> _mockMap = new Dictionary<object, List<Mock>>();
+        protected Dictionary<Type, List<Mock>> _mockTypeMap = new Dictionary<Type, List<Mock>>();
+        protected void MockRegister(object obj, Mock mock)
+        {
+            if (obj != null && mock != null)
+            {
+                if (!_mockMap.ContainsKey(obj))
+                {
+                    _mockMap[obj] = new List<Mock>();
+                }
+                _mockMap[obj].Add(mock);
+                if (!_mockTypeMap.ContainsKey(obj.GetType()))
+                {
+                    _mockTypeMap[obj.GetType()] = new List<Mock>();
+                    foreach(var type in obj.GetType().GetInterfaces())
+                    {
+                        _mockTypeMap[type] = new List<Mock>();
+                    }
+                }
+                _mockTypeMap[obj.GetType()].Add(mock);
+                foreach (var type in obj.GetType().GetInterfaces())
+                {
+                    _mockTypeMap[type].Add(mock);
+                }
+            }
         }
 
         private void Initialize()
         {
-            InitializeDI();
+            DiInitialize();
 
             foreach (var prop in typeof (T).GetProperties())
             {
@@ -142,6 +170,7 @@ namespace Scoper
                 if (doInstantiate)
                 {
                     prop.SetValue(_scope, mock);
+                    MockRegister(mockObject, mock);
                 }
                 else if (doBind)
                 {
@@ -150,7 +179,7 @@ namespace Scoper
 
                 if (doBind)
                 {
-                    RegisterObject(bindType, mockObject);
+                    DiRegister(bindType, mockObject);
                 }
             }
 

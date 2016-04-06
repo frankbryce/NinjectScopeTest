@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Core;
 using Autofac.Core.Registration;
 using Scoper.Exception;
+using Moq;
 
 namespace Scoper.Autofac
 {
@@ -23,12 +24,12 @@ namespace Scoper.Autofac
             return obj != DefaultValue.Get(type);
         }
 
-        protected override void InitializeDI()
+        protected override void DiInitialize()
         {
             Scope.Container = new ContainerBuilder().Build(Scope.Options);
         }
 
-        protected override void RegisterObject(Type type, object obj)
+        protected override void DiRegister(Type type, object obj)
         {
             if (obj != null)
             {
@@ -38,7 +39,7 @@ namespace Scoper.Autofac
             }
         }
 
-        protected override object DiContainerGet(Type type)
+        protected override object DiGet(Type type)
         {
             try
             {

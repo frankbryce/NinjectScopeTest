@@ -1,6 +1,7 @@
 ﻿using System;
 using Ninject;
 using Scoper.Exception;
+using Moq;
 
 namespace Scoper.Ninject
 {
@@ -19,17 +20,17 @@ namespace Scoper.Ninject
             return Scope.Kernel.TryGet(type) != null;
         }
 
-        protected override void InitializeDI()
+        protected override void DiInitialize()
         {
             Scope.Kernel = new StandardKernel(Scope.Settings);
         }
 
-        protected override void RegisterObject(Type type, object obj)
+        protected override void DiRegister(Type type, object obj)
         {
             Scope.Kernel.Bind(type).ToConstant(obj);
         }
 
-        protected override object DiContainerGet(Type type)
+        protected override object DiGet(Type type)
         {
             try
             {

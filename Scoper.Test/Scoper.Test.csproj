@@ -74,6 +74,8 @@
     <Compile Include="Autofac\DefaultScopeTest.cs" />
     <Compile Include="Autofac\GetWithoutAccessingScopeTest.cs" />
     <Compile Include="Autofac\MockBadTypesTest.cs" />
+    <Compile Include="Autofac\MockWithoutPropertiesTest.cs" />
+    <Compile Include="Autofac\MockWithPropertiesTest.cs" />
     <Compile Include="Autofac\NoBindUutTest.cs" />
     <Compile Include="Autofac\NoInstantiateTest.cs" />
     <Compile Include="Ninject\AutoResolvesTest.cs" />
@@ -82,6 +84,8 @@
     <Compile Include="Ninject\BasicUutTest.cs" />
     <Compile Include="Ninject\DefaultScopeTest.cs" />
     <Compile Include="Ninject\GetWithoutAccessingScopeTest.cs" />
+    <Compile Include="Ninject\MockWithoutPropertiesTest.cs" />
+    <Compile Include="Ninject\MockWithPropertiesTest.cs" />
     <Compile Include="Ninject\NoBindUutTest.cs" />
     <Compile Include="Ninject\BindInstantiateTest.cs" />
     <Compile Include="Ninject\NoInstantiateTest.cs" />

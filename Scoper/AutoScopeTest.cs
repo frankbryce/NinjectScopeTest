@@ -29,9 +29,37 @@ namespace Scoper
         }
 
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        protected internal virtual object DiContainerGet(Type type)
+        protected internal virtual object DiGet(Type type)
         {
             return DefaultValue.Get(type);
+        }
+
+        /// <summary>
+        /// This will get
+        /// </summary>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="registerWithDi"></param>
+        /// <returns></returns>
+        protected Mock<U> Mock<U>(bool registerWithDi = true) where U : class
+        {
+            var type = typeof(U);
+            if (_hasRegistration(type) && _mockTypeMap.ContainsKey(type))
+            {
+                if (_mockTypeMap[type].Count > 1)
+                    Logger.Warn($"Multiple Mocks of type {type} exist in the DI container.  Returning first mock which was registered.");
+                return (Mock<U>) _mockTypeMap[type].First();
+            }
+            else
+            {
+                var mock = ((Mock)typeof(Mock<>)
+                            .MakeGenericType(type)
+                            .GetConstructor(Type.EmptyTypes)
+                            .Invoke(new object[] { }));
+                var obj = mock.Object;
+                MockRegister(obj, mock);
+                DiRegister(type, obj);
+                return (Mock<U>) mock;
+            }
         }
 
         /// <summary>
@@ -52,7 +80,7 @@ namespace Scoper
             try
             {
                 // if the dependencies are all set to go, use default behavior
-                return DiContainerGet(type);
+                return DiGet(type);
             }
             catch (GetInstanceException)
             {
@@ -67,18 +95,25 @@ namespace Scoper
                     if (_hasRegistration(paramType)) continue;
 
                     var defaultValue = DefaultValue.Get(paramType);
-
-                    var obj = paramType.IsValueType || (paramType.IsClass && paramType.GetConstructor(Type.EmptyTypes) == null) ?
-                        defaultValue :
-                        ((Mock)typeof(Mock<>)
+                    Mock mock = null;
+                    object obj = null;
+                    if (paramType.IsValueType || (paramType.IsClass && paramType.GetConstructor(Type.EmptyTypes) == null))
+                    {
+                        obj = defaultValue;
+                    }
+                    else
+                    {
+                        mock = ((Mock)typeof(Mock<>)
                             .MakeGenericType(paramType)
                             .GetConstructor(Type.EmptyTypes)
-                            .Invoke(new object[] { }))
-                            .Object;
+                            .Invoke(new object[] { }));
+                        obj = mock.Object;
+                        MockRegister(obj, mock);
+                    }
 
-                    RegisterObject(paramType, obj);
+                    DiRegister(paramType, obj);
                 }
-                return DiContainerGet(type);
+                return DiGet(type);
             }
         }
     }
