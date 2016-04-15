@@ -42,6 +42,10 @@
       <HintPath>..\packages\Autofac.3.2.0\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Moq, Version=4.2.1312.1319, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.2.1312.1319\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
@@ -73,6 +77,7 @@
     <Compile Include="Autofac\BindInstantiateTest.cs" />
     <Compile Include="Autofac\DefaultScopeTest.cs" />
     <Compile Include="Autofac\GetWithoutAccessingScopeTest.cs" />
+    <Compile Include="Autofac\IssuesTests.cs" />
     <Compile Include="Autofac\MockBadTypesTest.cs" />
     <Compile Include="Autofac\NoBindUutTest.cs" />
     <Compile Include="Autofac\NoInstantiateTest.cs" />
@@ -82,6 +87,7 @@
     <Compile Include="Ninject\BasicUutTest.cs" />
     <Compile Include="Ninject\DefaultScopeTest.cs" />
     <Compile Include="Ninject\GetWithoutAccessingScopeTest.cs" />
+    <Compile Include="Ninject\IssuesTests.cs" />
     <Compile Include="Ninject\NoBindUutTest.cs" />
     <Compile Include="Ninject\BindInstantiateTest.cs" />
     <Compile Include="Ninject\NoInstantiateTest.cs" />
@@ -90,6 +96,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScopeTest\BasicDerivedScopeTest.cs" />
     <Compile Include="ScopeTest\BasicScopeTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Scoper.Autofac\Scoper.Autofac.csproj">
@@ -101,14 +112,9 @@
       <Name>Scoper.Ninject</Name>
     </ProjectReference>
     <ProjectReference Include="..\Scoper\Scoper.csproj">
-      <Project>{4E6EEA43-F798-4E27-9075-F95DD1F46431}</Project>
+      <Project>{4e6eea43-f798-4e27-9075-f95dd1f46431}</Project>
       <Name>Scoper</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
