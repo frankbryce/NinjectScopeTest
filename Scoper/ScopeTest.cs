@@ -34,8 +34,8 @@ namespace Scoper
     {
         protected static readonly ILog Logger =
             LogManager.GetLogger(typeof (AutoScopeTest<T>));
-        private T _scope;
 
+        private T _scope;
         protected T Scope
         {
             get
@@ -44,15 +44,45 @@ namespace Scoper
                 {
                     try
                     {
-                        _scope = new T();
-                        Initialize();
+                        lock (_staticScopeLock)
+                        {
+                            if (!_staticScopeInit)
+                            {
+                                Initialize(StaticScope);
+                                _staticScopeInit = true;
+                            }
+                        }
+                        _scope = ObjectCopier.Clone(StaticScope);
+                        CloneDi(StaticScope, _scope);
                     }
-                    catch(System.Exception ex)
+                    catch (System.Exception ex)
                     {
                         throw new InternalException(ex);
                     }
                 }
                 return _scope;
+            }
+        }
+
+        private static object _staticScopeLock = new object();
+        private static bool _staticScopeInit = false;
+        private static T _staticScope;
+        private static T StaticScope
+        {
+            get
+            {
+                if (_staticScope == null)
+                {
+                    try
+                    {
+                        _staticScope = new T();
+                    }
+                    catch (System.Exception ex)
+                    {
+                        throw new InternalException(ex);
+                    }
+                }
+                return _staticScope;
             }
         }
 
@@ -79,19 +109,24 @@ namespace Scoper
             return (U)Get(typeof(U));
         }
 
-        protected virtual void DiInitialize()
+        protected virtual void DiInitialize(T scope)
         {
             // no op
         }
 
-        protected virtual void DiRegister(Type type, object obj)
+        protected virtual void CloneDi(T scope, T childScope)
+        {
+            // no op
+        }
+
+        protected virtual void DiRegister(T scope, Type type, object obj)
         {
             // no op
         }
 
         protected Dictionary<object, List<Mock>> _mockMap = new Dictionary<object, List<Mock>>();
         protected Dictionary<Type, List<Mock>> _mockTypeMap = new Dictionary<Type, List<Mock>>();
-        protected void MockRegister(object obj, Mock mock)
+        protected void MockRegister(T scope, object obj, Mock mock)
         {
             if (obj != null && mock != null)
             {
@@ -116,9 +151,9 @@ namespace Scoper
             }
         }
 
-        private void Initialize()
+        private void Initialize(T scope)
         {
-            DiInitialize();
+            DiInitialize(scope);
 
             foreach (var prop in typeof (T).GetProperties())
             {
@@ -169,8 +204,8 @@ namespace Scoper
 
                 if (doInstantiate)
                 {
-                    prop.SetValue(_scope, mock);
-                    MockRegister(mockObject, mock);
+                    prop.SetValue(scope, mock);
+                    MockRegister(scope, mockObject, mock);
                 }
                 else if (doBind)
                 {
@@ -179,11 +214,11 @@ namespace Scoper
 
                 if (doBind)
                 {
-                    DiRegister(bindType, mockObject);
+                    DiRegister(scope, bindType, mockObject);
                 }
             }
 
-            _scope.Initialize();
+            scope.Initialize();
         }
     }
 }

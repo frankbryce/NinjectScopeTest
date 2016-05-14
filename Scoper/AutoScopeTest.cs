@@ -56,8 +56,8 @@ namespace Scoper
                             .GetConstructor(Type.EmptyTypes)
                             .Invoke(new object[] { }));
                 var obj = mock.Object;
-                MockRegister(obj, mock);
-                DiRegister(type, obj);
+                MockRegister(Scope, obj, mock);
+                DiRegister(Scope, type, obj);
                 return (Mock<U>) mock;
             }
         }
@@ -108,10 +108,10 @@ namespace Scoper
                             .GetConstructor(Type.EmptyTypes)
                             .Invoke(new object[] { }));
                         obj = mock.Object;
-                        MockRegister(obj, mock);
+                        MockRegister(Scope, obj, mock);
                     }
 
-                    DiRegister(paramType, obj);
+                    DiRegister(Scope, paramType, obj);
                 }
                 return DiGet(type);
             }

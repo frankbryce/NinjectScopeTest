@@ -24,18 +24,18 @@ namespace Scoper.Autofac
             return obj != DefaultValue.Get(type);
         }
 
-        protected override void DiInitialize()
+        protected override void DiInitialize(T scope)
         {
-            Scope.Container = new ContainerBuilder().Build(Scope.Options);
+            scope.Container = new ContainerBuilder().Build(scope.Options);
         }
 
-        protected override void DiRegister(Type type, object obj)
+        protected override void DiRegister(T scope, Type type, object obj)
         {
             if (obj != null)
             {
                 var builder = new ContainerBuilder();
                 builder.RegisterInstance(obj).As(type);
-                builder.Update(Scope.Container, Scope.Options);
+                builder.Update(scope.Container, scope.Options);
             }
         }
 

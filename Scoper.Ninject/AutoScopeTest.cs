@@ -1,7 +1,7 @@
 ﻿using System;
 using Ninject;
 using Scoper.Exception;
-using Moq;
+using Ninject.Extensions.ChildKernel;
 
 namespace Scoper.Ninject
 {
@@ -20,14 +20,19 @@ namespace Scoper.Ninject
             return Scope.Kernel.TryGet(type) != null;
         }
 
-        protected override void DiInitialize()
+        protected override void DiInitialize(T scope)
         {
-            Scope.Kernel = new StandardKernel(Scope.Settings);
+            scope.Kernel = new StandardKernel(scope.Settings);
         }
 
-        protected override void DiRegister(Type type, object obj)
+        protected override void CloneDi(T scope, T childScope)
         {
-            Scope.Kernel.Bind(type).ToConstant(obj);
+            childScope.Kernel = new ChildKernel(scope.Kernel);
+        }
+
+        protected override void DiRegister(T scope, Type type, object obj)
+        {
+            scope.Kernel.Bind(type).ToConstant(obj);
         }
 
         protected override object DiGet(Type type)
