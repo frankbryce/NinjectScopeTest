@@ -1,3 +1,5 @@
+using System;
+
 namespace Scoper
 {
     /// <summary>
@@ -6,7 +8,7 @@ namespace Scoper
     /// per test class.  By contrast [TestInitialize] methods are called
     /// once per test method.
     /// </summary>
-    public class Scope
+    public class Scope : IDisposable
     {
         /// <summary>
         /// Overridable Initialize() method that is called the first time that
@@ -15,6 +17,13 @@ namespace Scoper
         /// need to execute this method if the test doesn't require the Test Scope.
         /// </summary>
         public virtual void Initialize()
+        {
+        }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public virtual void Dispose()
         {
         }
     }

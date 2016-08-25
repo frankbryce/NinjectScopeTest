@@ -101,6 +101,7 @@
     <Compile Include="ScopeTest\AutoRegisterGenericMocksTest.cs" />
     <Compile Include="ScopeTest\BasicDerivedScopeTest.cs" />
     <Compile Include="ScopeTest\BasicScopeTest.cs" />
+    <Compile Include="ScopeTest\DisposeScopeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

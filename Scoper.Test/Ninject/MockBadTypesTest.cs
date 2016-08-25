@@ -25,12 +25,5 @@ namespace Scoper.Test.Ninject
             // to throw
             var invalidMock = Scope.BadMock;
         }
-
-        [TestMethod]
-        public void NinjectScopeTest_ShouldNotThrowExceptionIfWeDoNotAccessScope
-            ()
-        {
-            Assert.IsTrue(true);
-        }
     }
 }

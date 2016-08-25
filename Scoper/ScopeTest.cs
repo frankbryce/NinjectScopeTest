@@ -30,7 +30,7 @@ namespace Scoper
     /// as the scope for your unit test class.  Scoper.Ninject.AutoScopeTest needs this
     /// type in order to instantiate the scope when the tests load.
     /// </typeparam>
-    public class ScopeTest<T> where T : Scope, new()
+    public class ScopeTest<T> : IDisposable where T : Scope, new()
     {
         protected static readonly ILog Logger =
             LogManager.GetLogger(typeof (AutoScopeTest<T>));
@@ -184,6 +184,11 @@ namespace Scoper
             }
 
             _scope.Initialize();
+        }
+
+        public void Dispose()
+        {
+            Scope?.Dispose();
         }
     }
 }

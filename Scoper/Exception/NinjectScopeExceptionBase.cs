@@ -1,4 +1,8 @@
-﻿namespace Scoper.Exception
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Scoper.Exception
 {
     /// <summary>
     ///     The base object from which all Exceptions within the

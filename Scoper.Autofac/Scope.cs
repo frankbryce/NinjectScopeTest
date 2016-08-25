@@ -29,5 +29,14 @@ namespace Scoper.Autofac
         {
             get { return ContainerBuildOptions.None; }
         }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public override void Dispose()
+        {
+            Container?.Dispose();
+            base.Dispose();
+        }
     }
 }

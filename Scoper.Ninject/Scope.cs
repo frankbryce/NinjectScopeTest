@@ -33,5 +33,14 @@ namespace Scoper.Ninject
                 };
             }
         }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public override void Dispose()
+        {
+            Kernel?.Dispose();
+            base.Dispose();
+        }
     }
 }
