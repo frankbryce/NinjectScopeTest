@@ -21,6 +21,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\$configuration$\*" target="lib\net45" />
+    <file src="bin\$configuration$\Scoper.Ninject.dll" target="lib\net45" />
+    <file src="bin\$configuration$\Scoper.dll" target="lib\net45" />
   </files>
 </package>
