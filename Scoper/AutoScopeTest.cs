@@ -84,34 +84,51 @@ namespace Scoper
             }
             catch (GetInstanceException)
             {
-                // if activation fails in Ninject, let's bind all of the dependencies that could be used, then
-                // call base again to use the same constructor overloading rules that are used by default in Ninject.
-                var constructors = type.GetConstructors();
-                var constructorToUse = constructors.OrderBy(x => x.GetParameters().Length).First();
-                foreach (var param in constructorToUse.GetParameters())
+                if (type.IsInterface || type.IsAbstract)
                 {
-                    var paramType = param.ParameterType;
-
-                    if (_hasRegistration(paramType)) continue;
-
-                    var defaultValue = DefaultValue.Get(paramType);
-                    Mock mock = null;
-                    object obj = null;
-                    if (paramType.IsValueType || (paramType.IsClass && paramType.GetConstructor(Type.EmptyTypes) == null))
+                    var mock = ((Mock)typeof(Mock<>)
+                        .MakeGenericType(type)
+                        .GetConstructor(Type.EmptyTypes)
+                        .Invoke(new object[] { }));
+                    var obj = mock.Object;
+                    MockRegister(obj, mock);
+                    DiRegister(type, obj);
+                }
+                else // non-abstract class
+                {
+                    // if activation fails in Ninject, let's bind all of the dependencies that could be used, then
+                    // call base again to use the same constructor overloading rules that are used by default in Ninject.
+                    var constructors = type.GetConstructors();
+                    if (constructors.Length > 0)
                     {
-                        obj = defaultValue;
-                    }
-                    else
-                    {
-                        mock = ((Mock)typeof(Mock<>)
-                            .MakeGenericType(paramType)
-                            .GetConstructor(Type.EmptyTypes)
-                            .Invoke(new object[] { }));
-                        obj = mock.Object;
-                        MockRegister(obj, mock);
-                    }
+                        var constructorToUse = constructors.OrderBy(x => x.GetParameters().Length).First();
+                        foreach (var param in constructorToUse.GetParameters())
+                        {
+                            var paramType = param.ParameterType;
 
-                    DiRegister(paramType, obj);
+                            if (_hasRegistration(paramType)) continue;
+
+                            var defaultValue = DefaultValue.Get(paramType);
+                            Mock mock = null;
+                            object obj = null;
+                            if (paramType.IsValueType ||
+                                (paramType.IsClass && paramType.GetConstructor(Type.EmptyTypes) == null))
+                            {
+                                obj = defaultValue;
+                            }
+                            else
+                            {
+                                mock = ((Mock) typeof (Mock<>)
+                                    .MakeGenericType(paramType)
+                                    .GetConstructor(Type.EmptyTypes)
+                                    .Invoke(new object[] {}));
+                                obj = mock.Object;
+                                MockRegister(obj, mock);
+                            }
+
+                            DiRegister(paramType, obj);
+                        }
+                    }
                 }
                 return DiGet(type);
             }

@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Autofac\AutoResolvesTest.cs" />
     <Compile Include="Autofac\BasicTest.cs" />
+    <Compile Include="Autofac\BasicTypeRegistrationTest.cs" />
     <Compile Include="Autofac\BasicUutTest.cs" />
     <Compile Include="Autofac\BindInstantiateTest.cs" />
     <Compile Include="Autofac\DefaultScopeTest.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="ScopeTest\AutoRegisterGenericMocksTest.cs" />
     <Compile Include="ScopeTest\BasicDerivedScopeTest.cs" />
     <Compile Include="ScopeTest\BasicScopeTest.cs" />
+    <Compile Include="Ninject\BasicTypeRegistrationTest.cs" />
     <Compile Include="ScopeTest\DisposeScopeTest.cs" />
   </ItemGroup>
   <ItemGroup>
