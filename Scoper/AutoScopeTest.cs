@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Moq;
+using Ninject;
 using Scoper.Exception;
 
 namespace Scoper
@@ -22,25 +23,48 @@ namespace Scoper
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public abstract class AutoScopeTest<T> : ScopeTest<T> where T : Scope, new()
     {
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        protected internal virtual bool _hasRegistration(Type type)
+        protected internal bool _hasRegistration(Type type)
         {
-            return false;
+            return Scope.Kernel.TryGet(type) != null;
         }
 
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        protected internal virtual object DiGet(Type type)
+        protected override void DiInitialize()
         {
-            return DefaultValue.Get(type);
+            Scope.Kernel = new StandardKernel(Scope.Settings);
+        }
+
+        protected override void DiRegister(Type type, object obj)
+        {
+            Scope.Kernel.Bind(type).ToConstant(obj);
+        }
+
+        protected internal object DiGet(Type type)
+        {
+            try
+            {
+                return Scope.Kernel.Get(type);
+            }
+            catch (ActivationException ex)
+            {
+                throw new GetInstanceException(ex);
+            }
+            catch (System.Exception ex)
+            {
+                throw new InternalException(ex);
+            }
         }
 
         /// <summary>
         /// This will get
         /// </summary>
         /// <typeparam name="U"></typeparam>
-        /// <param name="registerWithDi"></param>
+        /// <param name="registerWithDi">
+        /// Whether to register the generated
+        /// mock with the backing kernel for creating
+        /// real implementations of objects
+        /// </param>
         /// <returns></returns>
-        protected Mock<U> Mock<U>(bool registerWithDi = true) where U : class
+        protected Mock<U> Mock<U>(bool registerWithDi) where U : class
         {
             var type = typeof(U);
             if (_hasRegistration(type) && _mockTypeMap.ContainsKey(type))
@@ -61,6 +85,12 @@ namespace Scoper
                 return (Mock<U>) mock;
             }
         }
+
+        /// <summary>
+        /// Default is to bind it to the 
+        /// </summary>
+        /// <remarks>So that you can use this within an expression tree</remarks>
+        protected Mock<U> Mock<U>() where U : class => Mock<U>(true);
 
         /// <summary>
         /// This will attempt to get an instance of type type via the kernel as it is

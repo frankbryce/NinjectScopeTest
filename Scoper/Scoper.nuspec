@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Scoper</id>
+    <version>$version$</version>
+    <title>Automocking framework for Moq using Ninject</title>
+    <authors>John Carpenter</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+        A package for making auto-mocking easier and intuitive with Moq
+    </description>
+    <releaseNotes>
+        Using MyGet as the build server for Scoper
+    </releaseNotes>
+    <copyright>Copyright 2016-</copyright>
+    <tags>Moq auto-mock mock Ninject</tags>
+    <dependencies>
+      <dependency id="Moq" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\$configuration$\Scoper.*" target="lib\net45" />
+  </files>
+</package>
