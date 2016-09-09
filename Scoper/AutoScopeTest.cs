@@ -1,5 +1,4 @@
-﻿using log4net;
-using Moq;
+﻿using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
 using Scoper.Exception;
@@ -11,16 +10,8 @@ namespace Scoper
     /// This class by itself will perform injection of default values for types,
     /// and will not return any meaningful values for your dependencies.
     /// </summary>
-    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public abstract class AutoScopeTest : MoqMockingKernel
     {
-        protected static readonly ILog Logger =
-            LogManager.GetLogger(typeof(AutoScopeTest));
-
-        protected AutoScopeTest() : base(new NinjectSettings { AllowNullInjection = true })
-        {
-        }
-
         /// <summary>
         /// This will create a Mock{U} object and register with the backing
         /// DI container to inject into classes which depend on type U
