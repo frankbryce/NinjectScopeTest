@@ -1,19 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using log4net;
 using Moq;
 using Ninject;
+using Ninject.Activation;
+using Ninject.Activation.Blocks;
+using Ninject.Components;
+using Ninject.MockingKernel.Moq;
+using Ninject.Modules;
+using Ninject.Parameters;
+using Ninject.Planning.Bindings;
+using Ninject.Syntax;
 using Scoper.Exception;
 
 namespace Scoper
 {
-    /// <summary>
-    /// Default AutoScopeTest uses the default Scope for minimal setup for 
-    /// the simplest tests.
-    /// </summary>
-    public abstract class AutoScopeTest : AutoScopeTest<Scope>
-    {
-    }
-
     /// <summary>
     /// This is a base type, use one of the derived DI AutoScopeTest objects.
     /// This class by itself will perform injection of default values for types,
@@ -21,24 +24,72 @@ namespace Scoper
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-    public abstract class AutoScopeTest<T> : ScopeTest<T> where T : Scope, new()
+    public abstract class AutoScopeTest : IKernel
     {
-        protected internal bool _hasRegistration(Type type)
+        protected static readonly ILog Logger =
+            LogManager.GetLogger(typeof(AutoScopeTest));
+        private Scope _scope;
+
+        private Scope Scope
         {
-            return Scope.Kernel.TryGet(type) != null;
+            get
+            {
+                if (_scope == null)
+                {
+                    try
+                    {
+                        _scope = new Scope();
+                    }
+                    catch (System.Exception ex)
+                    {
+                        throw new InternalException(ex);
+                    }
+                }
+                return _scope;
+            }
         }
 
-        protected override void DiInitialize()
+        public void Dispose()
         {
-            Scope.Kernel = new StandardKernel(Scope.Settings);
+            Scope?.Dispose();
         }
 
-        protected override void DiRegister(Type type, object obj)
+        /// <summary>
+        /// This will create a Mock{U} object and register with the backing
+        /// DI container to inject into classes which depend on type U
+        /// </summary>
+        /// <typeparam name="U"></typeparam>
+        /// <returns></returns>
+        protected Mock<U> GetMock<U>() where U : class
         {
-            Scope.Kernel.Bind(type).ToConstant(obj);
+            try
+            {
+                return Scope.Kernel.GetMock<U>();
+            }
+            catch (ActivationException ex)
+            {
+                throw new GetInstanceException(ex);
+            }
+            catch (System.Exception ex)
+            {
+                throw new InternalException(ex);
+            }
         }
 
-        protected internal object DiGet(Type type)
+        /// <summary>
+        /// This will attempt to get an instance of type type via the kernel as it is
+        /// setup manually.  On a failure, then NinjectAutoScopeTest will register
+        /// all dependencies of all constructors of type and return IKernel.Get<U>().
+        /// For each dependency which is not already registered with the Ninject
+        /// kernel, Ninject will bind it with a Moq.Mock.Object reference if
+        /// U is a non-sealed type.  If type is a class without a default constructor,
+        /// or a value type, then we register a default value for that type.
+        /// All registrations of previously unbound types are done as singleton
+        /// constant values; using Get(type) multiple times will inject the same
+        /// dependencies each time.
+        /// </summary>
+        /// <returns>An instance of an object of type type</returns>
+        protected object Get(Type type)
         {
             try
             {
@@ -55,113 +106,55 @@ namespace Scoper
         }
 
         /// <summary>
-        /// This will get
-        /// </summary>
-        /// <typeparam name="U"></typeparam>
-        /// <param name="registerWithDi">
-        /// Whether to register the generated
-        /// mock with the backing kernel for creating
-        /// real implementations of objects
-        /// </param>
-        /// <returns></returns>
-        protected Mock<U> Mock<U>(bool registerWithDi) where U : class
-        {
-            var type = typeof(U);
-            if (_hasRegistration(type) && _mockTypeMap.ContainsKey(type))
-            {
-                if (_mockTypeMap[type].Count > 1)
-                    Logger.Warn($"Multiple Mocks of type {type} exist in the DI container.  Returning first mock which was registered.");
-                return (Mock<U>) _mockTypeMap[type].First();
-            }
-            else
-            {
-                var mock = ((Mock)typeof(Mock<>)
-                            .MakeGenericType(type)
-                            .GetConstructor(Type.EmptyTypes)
-                            .Invoke(new object[] { }));
-                var obj = mock.Object;
-                MockRegister(obj, mock);
-                DiRegister(type, obj);
-                return (Mock<U>) mock;
-            }
-        }
-
-        /// <summary>
-        /// Default is to bind it to the 
-        /// </summary>
-        /// <remarks>So that you can use this within an expression tree</remarks>
-        protected Mock<U> Mock<U>() where U : class => Mock<U>(true);
-
-        /// <summary>
-        /// This will attempt to get an instance of type type via the kernel as it is
+        /// This will attempt to get an instance of type U via the kernel as it is
         /// setup manually.  On a failure, then NinjectAutoScopeTest will register
         /// all dependencies of all constructors of type and return IKernel.Get<U>().
         /// For each dependency which is not already registered with the Ninject
         /// kernel, Ninject will bind it with a Moq.Mock.Object reference if
-        /// U is a non-sealed type.  If type is a class without a default constructor,
+        /// U is a non-sealed type.  If U is a class without a default constructor,
         /// or a value type, then we register a default value for that type.
         /// All registrations of previously unbound types are done as singleton
-        /// constant values; using Get(type) multiple times will inject the same
-        /// dependencies each time.
+        /// constant values; using Get{U}() multiple times will inject the same
+        /// dependencies each time for the same U
         /// </summary>
-        /// <returns>An instance of an object of type type</returns>
-        protected override object Get(Type type)
-        {
-            try
-            {
-                // if the dependencies are all set to go, use default behavior
-                return DiGet(type);
-            }
-            catch (GetInstanceException)
-            {
-                if (type.IsInterface || type.IsAbstract)
-                {
-                    var mock = ((Mock)typeof(Mock<>)
-                        .MakeGenericType(type)
-                        .GetConstructor(Type.EmptyTypes)
-                        .Invoke(new object[] { }));
-                    var obj = mock.Object;
-                    MockRegister(obj, mock);
-                    DiRegister(type, obj);
-                }
-                else // non-abstract class
-                {
-                    // if activation fails in Ninject, let's bind all of the dependencies that could be used, then
-                    // call base again to use the same constructor overloading rules that are used by default in Ninject.
-                    var constructors = type.GetConstructors();
-                    if (constructors.Length > 0)
-                    {
-                        var constructorToUse = constructors.OrderBy(x => x.GetParameters().Length).First();
-                        foreach (var param in constructorToUse.GetParameters())
-                        {
-                            var paramType = param.ParameterType;
+        /// <returns>An instance of an object of type U</returns>
+        protected U Get<U>() => (U) Get(typeof (U));
 
-                            if (_hasRegistration(paramType)) continue;
-
-                            var defaultValue = DefaultValue.Get(paramType);
-                            Mock mock = null;
-                            object obj = null;
-                            if (paramType.IsValueType ||
-                                (paramType.IsClass && paramType.GetConstructor(Type.EmptyTypes) == null))
-                            {
-                                obj = defaultValue;
-                            }
-                            else
-                            {
-                                mock = ((Mock) typeof (Mock<>)
-                                    .MakeGenericType(paramType)
-                                    .GetConstructor(Type.EmptyTypes)
-                                    .Invoke(new object[] {}));
-                                obj = mock.Object;
-                                MockRegister(obj, mock);
-                            }
-
-                            DiRegister(paramType, obj);
-                        }
-                    }
-                }
-                return DiGet(type);
-            }
-        }
+        public IBindingToSyntax<T1> Bind<T1>() => Scope?.Kernel?.Bind<T1>();
+        public IBindingToSyntax<T1, T2> Bind<T1, T2>() => Scope?.Kernel?.Bind<T1, T2>();
+        public IBindingToSyntax<T1, T2, T3> Bind<T1, T2, T3>() => Scope?.Kernel?.Bind<T1, T2, T3>();
+        public IBindingToSyntax<T1, T2, T3, T4> Bind<T1, T2, T3, T4>() => Scope?.Kernel?.Bind<T1, T2, T3, T4>();
+        public IBindingToSyntax<object> Bind(params Type[] services) => Scope?.Kernel?.Bind(services);
+        public void Unbind<T1>() => Scope?.Kernel?.Unbind<T1>();
+        public void Unbind(Type service) => Scope?.Kernel?.Unbind(service);
+        public IBindingToSyntax<T1> Rebind<T1>() => Scope?.Kernel?.Rebind<T1>();
+        public IBindingToSyntax<T1, T2> Rebind<T1, T2>() => Scope?.Kernel?.Rebind<T1, T2>();
+        public IBindingToSyntax<T1, T2, T3> Rebind<T1, T2, T3>() => Scope?.Kernel?.Rebind<T1, T2, T3>();
+        public IBindingToSyntax<T1, T2, T3, T4> Rebind<T1, T2, T3, T4>() => Scope?.Kernel?.Rebind<T1, T2, T3, T4>();
+        public IBindingToSyntax<object> Rebind(params Type[] services) => Scope?.Kernel?.Rebind(services);
+        public void AddBinding(IBinding binding) => Scope?.Kernel?.AddBinding(binding);
+        public void RemoveBinding(IBinding binding) => Scope?.Kernel?.RemoveBinding(binding);
+        public bool CanResolve(IRequest request) => Scope?.Kernel?.CanResolve(request) ?? false;
+        public bool CanResolve(IRequest request, bool ignoreImplicitBindings)
+            => Scope?.Kernel?.CanResolve(request, ignoreImplicitBindings) ?? false;
+        public IEnumerable<object> Resolve(IRequest request) => Scope?.Kernel?.Resolve(request);
+        public bool Release(object instance) => Scope?.Kernel?.Release(instance) ?? false;
+        public IRequest CreateRequest(Type service, Func<IBindingMetadata, bool> constraint, IEnumerable<IParameter> parameters,
+            bool isOptional, bool isUnique)
+            => Scope?.Kernel?.CreateRequest(service, constraint, parameters, isOptional, isUnique);
+        public object GetService(Type serviceType) => (Scope?.Kernel as IKernel)?.GetService(serviceType);
+        public bool IsDisposed => Scope?.Kernel?.IsDisposed ?? true;
+        public IEnumerable<INinjectModule> GetModules() => Scope?.Kernel?.GetModules();
+        public bool HasModule(string name) => Scope?.Kernel?.HasModule(name) ?? false;
+        public void Unload(string name) => Scope?.Kernel?.Unload(name);
+        public void Inject(object instance, params IParameter[] parameters)
+            => Scope?.Kernel?.Inject(instance, parameters);
+        public IEnumerable<IBinding> GetBindings(Type service) => Scope?.Kernel?.GetBindings(service);
+        public IActivationBlock BeginBlock() => Scope?.Kernel?.BeginBlock();
+        public INinjectSettings Settings => Scope?.Kernel?.Settings;
+        public IComponentContainer Components => Scope?.Kernel?.Components;
+        public void Load(IEnumerable<INinjectModule> assemblies) => Scope?.Kernel?.Load(assemblies);
+        public void Load(IEnumerable<string> filePatterns) => Scope?.Kernel?.Load(filePatterns);
+        public void Load(IEnumerable<Assembly> m) => Scope?.Kernel?.Load(m);
     }
 }

@@ -46,9 +46,17 @@
       <HintPath>..\packages\Moq.4.5.21\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Scoper, Version=1.2.11.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\bin\Debug\Scoper.dll</HintPath>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.MockingKernel, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MockingKernel.3.2.2.0\lib\net45-full\Ninject.MockingKernel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.MockingKernel.Moq, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MockingKernel.Moq.3.2.2.0\lib\net45-full\Ninject.MockingKernel.Moq.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
@@ -67,30 +75,27 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AutoResolvesTest.cs" />
-    <Compile Include="BadBindUutTest.cs" />
-    <Compile Include="BasicNinjectSettingsTest.cs" />
     <Compile Include="BasicUutTest.cs" />
     <Compile Include="DefaultScopeTest.cs" />
     <Compile Include="GetWithoutAccessingScopeTest.cs" />
     <Compile Include="IssuesTests.cs" />
     <Compile Include="MockWithoutPropertiesTest.cs" />
-    <Compile Include="MockWithPropertiesTest.cs" />
-    <Compile Include="NoBindUutTest.cs" />
-    <Compile Include="BindInstantiateTest.cs" />
-    <Compile Include="NoInstantiateTest.cs" />
     <Compile Include="MockBadTypesTest.cs" />
     <Compile Include="BasicTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AutoRegisterGenericMocksTest.cs" />
-    <Compile Include="BasicDerivedScopeTest.cs" />
-    <Compile Include="BasicScopeTest.cs" />
     <Compile Include="BasicTypeRegistrationTest.cs" />
     <Compile Include="DisposeScopeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Scoper\Scoper.csproj">
+      <Project>{4e6eea43-f798-4e27-9075-f95dd1f46431}</Project>
+      <Name>Scoper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

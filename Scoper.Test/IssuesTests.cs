@@ -2,10 +2,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace Scoper.Test.Ninject
+namespace Scoper.Test
 {
     [TestClass]
-    public class IssuesTests : Scoper.Ninject.AutoScopeTest<IssuesTestsScope>
+    public class IssuesTests : AutoScopeTest
     {
         [TestMethod]
         public void Issue_000002_GettingASealedClassShouldNotReturnNull()
@@ -13,11 +13,6 @@ namespace Scoper.Test.Ninject
             var uut = Get<SealedClass>();
             Assert.IsNotNull(uut);
         }
-    }
-
-    public class IssuesTestsScope : Scoper.Ninject.Scope
-    {
-        public Mock<ICloneable> Clonable { get; set; }
     }
 
     public sealed class SealedClass

@@ -1,11 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Scoper.Test.Ninject
+namespace Scoper.Test
 {
     [TestClass]
-    public class BasicTypeRegistrationTest : Scoper.Ninject.AutoScopeTest<BasicRegisterScope>
+    public class BasicTypeRegistrationTest : AutoScopeTest
     {
+        [TestInitialize]
+        public void SetupMocks() => Bind<ICloneable>().To<BasicClonable>();
+
         [TestMethod]
         public void CanGetDependencyWithNoConstructorArguments()
         {
@@ -17,14 +20,6 @@ namespace Scoper.Test.Ninject
         public void CanGetDependencyWithNoScopeRegistration()
         {
             Assert.IsNotNull(Get<IComparable>());
-        }
-    }
-
-    public class BasicRegisterScope : Scoper.Ninject.Scope
-    {
-        public override void Initialize()
-        {
-            Kernel.Bind<ICloneable>().To<BasicClonable>();
         }
     }
 

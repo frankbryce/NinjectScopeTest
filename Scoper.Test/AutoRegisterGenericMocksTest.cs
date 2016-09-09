@@ -2,13 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace Scoper.Test.ScopeTest
+namespace Scoper.Test
 {
-    public class AutoRegisterGenericMocksScope : Scoper.Ninject.Scope
-    {
-        public Mock<ITestDep<ICloneable>> GenericMock { get; set; }
-    }
-
     public interface ITestDep<T>
     {
         object DoCompare(object obj);
@@ -45,16 +40,22 @@ namespace Scoper.Test.ScopeTest
     }
 
     [TestClass]
-    public class AutoRegisterGenericMocksTest : Scoper.Ninject.AutoScopeTest<AutoRegisterGenericMocksScope>
+    public class AutoRegisterGenericMocksTest : AutoScopeTest
     {
+        [TestInitialize]
+        public void SetupMocks()
+        {
+            
+        }
+
         /// <summary>
         /// This test was created for the testing of https://github.com/frankbryce/Scoper/issues/1
         /// </summary>
         [TestMethod]
         public void MockShouldBeRegisteredWithDi()
         {
-            Assert.AreEqual(Scope.GenericMock.Object,
-                DiGet(typeof (ITestDep<>).MakeGenericType(typeof (ICloneable))));
+            Assert.AreEqual(GetMock<ITestDep<ICloneable>>().Object,
+                Get(typeof (ITestDep<>).MakeGenericType(typeof (ICloneable))));
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace Scoper.Test.ScopeTest
         [TestMethod, ExpectedException(typeof(TestUut<ICloneable>.TestException))]
         public void MockShouldBeInjectedWhenGettingUut()
         {
-            Scope.GenericMock.Setup(x => x.DoCompare(It.IsAny<object>())).Throws(new System.Exception());
+            GetMock<ITestDep<ICloneable>>().Setup(x => x.DoCompare(It.IsAny<object>())).Throws(new System.Exception());
             var uut = Get<TestUut<ICloneable>>();
             uut.DoCompare(null);
         }

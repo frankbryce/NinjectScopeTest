@@ -2,7 +2,7 @@
 {
     /// <summary>
     ///     This object is here to make it clear when an exception occurs
-    ///     within the confines of the Scoper.Ninject.AutoScopeTest package.
+    ///     within the confines of the AutoScopeTest package.
     /// </summary>
     public class InternalException : NinjectScopeExceptionBase
     {

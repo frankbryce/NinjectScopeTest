@@ -1,5 +1,6 @@
 using System;
 using Ninject;
+using Ninject.MockingKernel.Moq;
 
 namespace Scoper
 {
@@ -9,19 +10,14 @@ namespace Scoper
     /// per test class.  By contrast [TestInitialize] methods are called
     /// once per test method.
     /// </summary>
-    public class Scope : IDisposable
+    public sealed class Scope : IDisposable
     {
-        /// <summary>
-        /// Overridable Initialize() method that is called the first time that
-        /// the instance of this object is accessed.  It's like a TestInitialize()
-        /// call but test framework agnostic, and lazy loaded so that not all tests
-        /// need to execute this method if the test doesn't require the Test Scope.
-        /// </summary>
-        public virtual void Initialize()
+        public Scope()
         {
+            Kernel = new MoqMockingKernel(Settings);
         }
 
-        internal StandardKernel Kernel { get; set; }
+        public MoqMockingKernel Kernel { get; set; }
 
         /// <summary>
         /// Provide the ability of the derived scope to override the default
@@ -33,7 +29,7 @@ namespace Scoper
         ///     AllowNullInjection = true
         /// };
         /// </summary>
-        internal virtual INinjectSettings Settings => new NinjectSettings
+        public INinjectSettings Settings => new NinjectSettings
         {
             AllowNullInjection = true
         };
@@ -41,7 +37,7 @@ namespace Scoper
         /// <summary>
         /// Dispose
         /// </summary>
-        public virtual void Dispose()
+        public void Dispose()
         {
             Kernel?.Dispose();
         }

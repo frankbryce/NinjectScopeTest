@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Scoper.Test.Ninject
+namespace Scoper.Test
 {
     [TestClass]
-    public class MockWithoutPropertiesTest : Scoper.Ninject.AutoScopeTest
+    public class MockWithoutPropertiesTest : AutoScopeTest
     {
         public class Uut
         {
@@ -16,7 +16,7 @@ namespace Scoper.Test.Ninject
         [TestMethod]
         public void SettingUpAMockShouldWorkWithDi()
         {
-            Mock<ICloneable>().Setup(x => x.Clone()).Returns("I'm cloned!");
+            GetMock<ICloneable>().Setup(x => x.Clone()).Returns("I'm cloned!");
             Assert.AreEqual("I'm cloned!", Get<Uut>().DoClone());
         }
     }
