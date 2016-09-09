@@ -79,6 +79,7 @@
     <Compile Include="DefaultScopeTest.cs" />
     <Compile Include="GetWithoutAccessingScopeTest.cs" />
     <Compile Include="IssuesTests.cs" />
+    <Compile Include="LoadModuleTest.cs" />
     <Compile Include="MockWithoutPropertiesTest.cs" />
     <Compile Include="MockBadTypesTest.cs" />
     <Compile Include="BasicTest.cs" />

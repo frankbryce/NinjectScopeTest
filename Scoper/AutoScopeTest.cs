@@ -1,6 +1,7 @@
 ﻿using Moq;
 using Ninject;
 using Ninject.MockingKernel.Moq;
+using Ninject.Modules;
 using Scoper.Exception;
 
 namespace Scoper
@@ -60,5 +61,10 @@ namespace Scoper
                 throw new InternalException(ex);
             }
         }
+
+        /// <summary>
+        /// Enhancing the load method to take modules passed in without some wrapping enumerable object
+        /// </summary>
+        public void Load(params INinjectModule[] modules) => base.Load(modules);
     }
 }
