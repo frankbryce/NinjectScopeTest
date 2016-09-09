@@ -55,7 +55,7 @@ namespace Scoper.Test
         public void MockShouldBeRegisteredWithDi()
         {
             Assert.AreEqual(GetMock<ITestDep<ICloneable>>().Object,
-                Get(typeof (ITestDep<>).MakeGenericType(typeof (ICloneable))));
+                Get<ITestDep<ICloneable>>());
         }
 
         /// <summary>
